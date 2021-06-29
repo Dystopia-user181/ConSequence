@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html style="margin: 0; background-color: #000; overflow: hidden; font: 30px sans-serif;">
+<head>
+	<script src="js/rect.js" defer></script>
+	<script src="js/index.js" defer></script>
+	<script src="js/levels.js" defer></script>
+	<script src="js/physics.js" defer></script>
+	<script src="js/controls.js" defer></script>
+	<script src="js/canvas.js" defer></script>
+	<title>Game jam thing</title>
+	<style>
+		#startdiv {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+
+		#gamediv {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+		}
+
+		#optionsmodal {
+			position: absolute;
+			z-index: 500;
+			color: #fff;
+			border: 2px solid;
+			top: 50%;
+			left: 50%;
+			background-color: #000;
+			padding: 10px;
+			text-align: center;
+			width: 500px;
+			transform: translate(-50%, -50%);
+		}
+		#modal-bg {
+			position: absolute;
+			z-index: 100;
+			background-color: #000a;
+			height: 100%;
+			width: 100%;
+		}
+
+		#sidediv {
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+
+		#sequencediv, #modifierdiv {
+			padding: 3px;
+			color: #fff;
+			background-color: #0008;
+		}
+		#modifierdiv {
+			padding-top: 10px;
+			font-size: 20px;
+		}
+
+		.startBtn {
+			color: #fff;
+			background: #000;
+			border: 2px solid;
+			width: 250px;
+			height: 70px;
+			font: 30px sans-serif;
+			margin: 5px
+		}
+
+		.smallBtn {
+			color: #fff;
+			background: #000;
+			border: 1px solid;
+			border-radius: 5px;
+			width: 100px;
+			height: 40px;
+			font: 20px sans-serif;
+			margin: 5px
+		}
+
+		* {
+			font-family: sans-serif;
+		}
+	</style>
+</head>
+<body style="width: 100vw; height: 100vh; margin: 0; padding: 0">
+	<div style="position: absolute;
+	width: 100%; height: 100%;
+	display: flex; flex-direction: column;
+	justify-content: center; align-items: center;" id="startdiv">
+		<h2 style="color: #fff">ConSequence</h2>
+		<button onclick="start()" class="startBtn">Play</button>
+		<button onclick="openControls()" class="startBtn">Controls</button>
+	</div>
+	<div style="position: absolute;
+	width: 100%; height: 100%;
+	display: flex; flex-direction: column;
+	justify-content: center; align-items: center; display: none; z-index: 600; background: #000" id="controlsdiv">
+		<h2 style="color: #fff">Controls</h2>
+		<p style="color: #fff">
+			w: jump<br><br>
+			a, d: move forwards/backwards<br><br>
+			shift+r: reset level<br><br>
+		</p>
+		<button onclick="closeControls()" class="startBtn">Back</button>
+	</div>
+	<div style="display: none" id="gamediv">
+		<button class="smallBtn" onclick="pause()" style="position: absolute; z-index: 1">Options</button>
+		<canvas id="c" style="position: absolute;"></canvas>
+		<div id="sidediv">
+			<div id="sequencediv" style="display: none">
+				<span id="sequencetext">Sequences: 0 out of 0</span>
+			</div>
+			<div id="modifierdiv" style="display: none">
+				<span id="modifiertext">
+					Modifiers:
+				</span>
+			</div>
+		</div>
+		<div id="optionsmodal" style="display: none">
+			<h3>Paused</h3>
+			<button class="startBtn" onclick="cont()">Continue</button>
+			<button class="startBtn" onclick="openControls()">Controls</button>
+			<button class="startBtn" onclick="map.new(); cont();">Reset Level</button>
+		</div>
+		<div id="modal-bg" style="display: none">
+		</div>
+	</div>
+</body>
+</html>

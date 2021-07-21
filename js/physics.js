@@ -1,15 +1,12 @@
 player.move = function() {
 	if (player.deathTimer) return;
 	let p = player.rect;
-	p.pos.x += Math.round(player.velX);
+	p.pos.x += Math.round(player.velX)/(1+p.isInsideGrp(map.simBSequence, 7));
 	if (p.fixPos(player.velX, "x")) player.velX = 0;
 	for (let i in map.blocks) {
 		let b = map.blocks[i];
 		b.meta.prevPos = {...b.pos};
 	}
-	fixBSPosX();
-	moveBlocksX();
-	moveBlocksX();
 	moveBlocksX();
 	moveBlocksX();
 	if (map.isCollMap(p, map.death)) player.tmpDead = 'x';
@@ -20,22 +17,19 @@ player.move = function() {
 	let canJump = false;
 	let isCollMap = false;
 	for (let i = 0; i < Math.floor(player.velY*ySign/10); i++) {
-		p.pos.y += 10*ySign;
+		p.pos.y += 10*ySign/(1+p.isInsideGrp(map.simBSequence, 7));
 		if (p.fixPos(player.velY, "y")) {
 			canJump = player.velY >= 0 || canJump;
 			player.velY = 0;
 			isCollMap = true;
 		}
 	}
-	let left = player.velY%10
-	p.pos.y += Math.round(left);
+	let left = player.velY%10;
+	p.pos.y += Math.round(left)/(1+p.isInsideGrp(map.simBSequence, 7));
 	if (p.fixPos(player.velY, "y")) {
 		canJump = player.velY >= 0 || canJump;
 		player.velY = 0;
 		isCollMap = true;
-	}
-	if (fixBSPosY()) {
-		canJump = true;
 	}
 	player.collWBlock = false;
 	moveBlocksY(isCollMap);
@@ -52,13 +46,27 @@ player.move = function() {
 	}
 
 	player.velX *= 0.7;
-	player.velY += 0.6;
-	if (controls.jump && canJump) {
-		player.velY = -15 * (Math.sqrt(player.modifiers.jump*modifiers.jump.active)*0.4 + 1);
-	} else if (controls.jump && player.collWBlock) {
-		player.velY = -10 * (Math.sqrt(player.modifiers.jump*modifiers.jump.active)*0.4 + 1);
+	let isInside = p.isInsideGrp(map.simBSequence, 7);
+	if (!isInside) {
+		player.velY += 0.6;
+		if (controls.jump && canJump) {
+			player.velY = -15 * (Math.sqrt(player.modifiers.jump*modifiers.jump.active)*0.4 + 1);
+		} else if (controls.jump && player.collWBlock) {
+			player.velY = -15 * (Math.sqrt(player.modifiers.jump*modifiers.jump.active)*0.4 + 1);
+		}
+		player.velY *= 0.99;
+		c.style.filter = "invert(0)";
+	} else {
+		if (controls.down) player.velY = 5;
+		else if (controls.jump) player.velY = -5;
+		else player.velY = 0;
+
+		if (controls.backward) player.velX = -5;
+		else if (controls.forward) player.velX = 5;
+		else player.velX = 0;
+
+		c.style.filter = "invert(1)";
 	}
-	player.velY *= 0.99;
 	if (p.pos.y > 4000) {
 		player.deathTimer = 10;
 	}
@@ -125,17 +133,6 @@ function moveBlocksX() {
 			if (iter > 0) {
 				player.velX *= 0.8;
 			}
-			for (let j in map.blocks) {
-				let b1 = map.blocks[j];
-				if (b1 == b) continue;
-				let iter = 0;
-				let xSign = Math.sign(player.velX)
-				while (b1.isColliding(b) && iter < Math.abs(player.velX)) {
-					iter++;
-					b.pos.x -= xSign/2;
-					if (!map.isCollMap(b1)) b1.pos.x += xSign/2;
-				}
-			}
 		}
 	}
 }
@@ -147,37 +144,13 @@ function moveBlocksY(isCollMap) {
 	
 	for (let i in map.blocks) {
 		let b = map.blocks[i];
-		b.pos.y += b.meta.velY;
+		b.pos.y += Math.round(b.meta.velY);
 		let bprevVelY = b.meta.velY;
 		let isColl = map.isCollMap(b, map.map.concat(map.bodies).concat(map.death));
 
 		if (isColl) {
 			if (b.fixPos(b.meta.velY, "y", map.map.concat(map.bodies).concat(map.death))) {
-				b.meta.velY = 0;
-			}
-		}
-
-
-		for (let j in map.blocks) {
-			let b1 = map.blocks[j];
-			if (b1 == b || !b1.isColliding(b)) continue;
-			let iter = 0;
-			let ySign = Math.sign(bprevVelY);
-
-			if (map.isCollMap(b1)) {
-				b.fixPos(prevVelY, "y", [b1]);
-			}
-			while (b1.isColliding(b) && iter < 80) {
-				iter++;
-				b.pos.y -= ySign/2;
-				b1.pos.y += ySign/2;
-			}
-			if (iter > 0) {
-				let bM = (b.height*b.width), b1M = (b1.height*b1.width), mS = bM + b1M;
-				[b.meta.velY, b1.meta.velY] = [
-					(bprevVelY*(bM-b1M) + b1.meta.velY*(b1M*2))/mS,
-					(b1.meta.velY*(b1M-bM) + bprevVelY*(bM*2))/mS
-				]
+				b.meta.velY = Math.sign(b.meta.velY)*1e-16;
 			}
 		}
 
@@ -191,9 +164,10 @@ function moveBlocksY(isCollMap) {
 
 			if (isColl) {
 				if (p.isColliding(b)) {
+					if (ySign == 0) return;
 					if (ySign == 1) p.pos.y = b.pos.y - p.height;
 					else p.pos.y = b.pos.y + b.height;
-					player.velY = -player.velY*0.5;
+					player.velY = 0;
 					continue;
 				}
 			}
@@ -206,28 +180,11 @@ function moveBlocksY(isCollMap) {
 					continue;
 				}
 			}
-			while (p.isColliding(b) && iter < Math.abs(prevVelY)) {
+			while (p.isColliding(b) && iter < Math.abs(prevVelY)*2) {
 				iter++;
 				b.pos.y += ySign/2;
+				if (map.isCollMap(b, map.map.concat(map.bodies).concat(map.death))) b.pos.y -= ySign/2;
 				p.pos.y -= ySign/2;
-			}
-			for (let j in map.blocks) {
-				let b1 = map.blocks[j];
-				if (b1 == b) continue;
-				let iter = 0;
-				let ySign = Math.sign(b.meta.velY)
-				while (b1.isColliding(b) && iter < Math.abs(b.meta.velY)) {
-					iter++;
-					b.pos.y -= ySign/2;
-					if (!map.isCollMap(b1)) b1.pos.y += ySign/2;
-				}
-				if (iter > 0) {
-					let bM = (b.height*b.width), b1M = (b1.height*b1.width), mS = bM + b1M;
-					[b.meta.velY, b1.meta.velY] = [
-						(b.meta.velY*(bM-b1M) + b1.meta.velY*(b1M*2))/mS,
-						(b1.meta.velY*(b1M-bM) + b.meta.velY*(bM*2))/mS
-					]
-				}
 			}
 		}
 
@@ -251,7 +208,7 @@ function fixBSPosX() {
 		let b = map.simBSequence[i];
 		if (!b.meta.collide || !p.isColliding(b)) continue;
 		let prevPos = {...p.pos};
-		p.fixPos(player.velX - (b.pos.x - b.meta.prevPos.x), 'x', [b]);
+		p.fixPos(player.velX - (b.pos.x - b.meta.prevPos.x), 'x', b);
 		if (map.isCollMap(p, map.map.concat(map.bodies).concat(map.simBSequence))) {
 			p.pos = {...prevPos};
 			b.meta.collide = false;
@@ -274,7 +231,7 @@ function fixBSPosY() {
 		if (!b.meta.collide || !p.isColliding(b)) continue;
 		isColl = true;
 		let prevPos = {...p.pos};
-		p.fixPos(player.velY - (b.pos.y - b.meta.prevPos.y), 'y', [b]);
+		p.fixPos(player.velY - (b.pos.y - b.meta.prevPos.y), 'y', b);
 		if (map.isCollMap(p, map.map.concat(map.bodies).concat(map.simBSequence))) {
 			p.pos = {...prevPos};
 			b.meta.collide = false;

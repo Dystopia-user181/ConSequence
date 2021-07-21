@@ -5,7 +5,8 @@ window.addEventListener("keydown", e => {
 		case "a": controls.backward = 1; break
 		case "d": controls.forward = 1; break
 		case "w": controls.jump = 1; break
-		case "s": if (map.level == 15) newSequence(); break
+		case "s": controls.down = 1; break
+		case "n": if (map.level == 17) newSequence(); break
 		case "R": map.new(); cont(); break
 	}
 })
@@ -16,13 +17,15 @@ window.addEventListener("keyup", e => {
 		case "a": controls.backward = 0; break
 		case "d": controls.forward = 0; break
 		case "w": controls.jump = 0; break
+		case "s": controls.down = 0; break
 	}
 })
 
 let controls = {
 	backward: 0,
 	forward: 0,
-	jump: 0
+	jump: 0,
+	down: 0
 }
 
 function openControls() {

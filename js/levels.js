@@ -41,16 +41,20 @@ let map = {
 		return {
 			buttonObj: new Rect(x, y, w, h, {type: "button"}),
 			displayObj: new Rect(x, y, w, h, {type: "btndisplay"}),
+			displayBase: new Rect(x - 5, y + h - 5, w + 10, 5, {type: "btndisplaybase"}),
 			isPressed: false,
 			query() {
 				this.isPressed = map.isCollMap(this.buttonObj, [player.rect, ...map.blocks, ...map.simPSequence, ...map.simBSequence]);
-				this.displayObj.pos.y = this.buttonObj.pos.y + 5*this.isPressed;
-				this.displayObj.height = this.buttonObj.height - 5*this.isPressed;
+				this.displayObj.pos.y = this.buttonObj.pos.y + 4*this.isPressed;
+				this.displayObj.height = this.buttonObj.height - 4*this.isPressed;
 			},
 			draw() {
 				ctx.fillStyle = "#08f";
-				ctx.shadowBlur = 0;
+				ctx.shadowColor = "#0af";
+				ctx.shadowBlur = 15;
 				drawRect(this.displayObj);
+				ctx.fillStyle = "#666";
+				drawRect(this.displayBase);
 			}
 		}
 	},
@@ -61,19 +65,20 @@ let map = {
 			hasPicked: false,
 			query() {
 				if (!this.hasPicked && player.rect.isColliding(this.hitbox)) {
-					player.modifiers[this.type] ++;
+					player.modifiers[this.type]++;
 					this.hasPicked = true;
 					updateModifierHUD();
 				}
 			},
 			draw() {
-				if (!this.hasPicked) modifiers[this.type].draw(x, y);
+				if (!this.hasPicked) modifiers[this.type].draw(x, y + Math.sin(map.sequenceTime/7)*7);
 			}
 		}
 	},
 	sequenceLimit: 0,
 	sequences: 1,
 	sequenceTime: 0,
+	sequenceTCounter: 0,
 	playerSequences: [],
 	blockSequences: [],
 	simPSequence: [],
@@ -87,6 +92,8 @@ let map = {
 		map.blocks = [];
 		map.death = [];
 		map.sequences = 1;
+		map.sequenceTime = 0;
+		map.sequenceTCounter = 0;
 		map.playerSequences = [];
 		map.blockSequences = [];
 		map.simPSequence = [];
@@ -106,15 +113,23 @@ let map = {
 		updateModifierHUD();
 	},
 	exit: undefined,
+	levelTemplate() {
+		map.sequenceLimit = 0;
+		camera.zoom = 1;
+		map.exit = new Rect(0, 0, 20, 40);
+		map.custom = () => {};
+		map.customBottom = () => {};
+		map.customTop = () => {};
+	},
 	level1() {
 		camera.zoom = 1
 		map.sequenceLimit = 0;
 		map.mapRect(-100, 100, 750, 25);
-		for (let i = 0; i < 6; i++) {
+		for (let i = 0; i < 3; i++) {
 			map.mapRect(-100, 100 - i*200, 200, 25);
 			map.mapRect(150, 0 - i*200, 200, 25);
 		}
-		map.mapRect(350, -1000, 50, 1100);
+		map.mapRect(350, -400, 50, 500);
 		map.exit = new Rect(550, 60, 20, 40);
 		map.custom = ()=>{};
 		map.customBottom = ()=>{};
@@ -228,7 +243,7 @@ let map = {
 		map.customTop = () => {};
 	},
 	level8() {
-		camera.zoom = 1
+		camera.zoom = 0.8;
 		map.sequenceLimit = 2;
 		map.mapRect(-300, 100, 1100, 50);
 		map.bodyRect(100, -100, 50, 80);
@@ -288,11 +303,10 @@ let map = {
 
 		// floor 1
 		map.mapRect(-100, 100, 1200, 50);
-		map.deathRect(1100, 125, 399, 25);
-		map.bodyRect(700, 50, 380, 50);
+		map.deathRect(1100, 90, 399, 60);
 
 		// floor 2
-		map.mapRect(-100, -100, 1450, 50);
+		map.mapRect(-100, -100, 1250, 50);
 		map.mapRect(-100, -150, 1200, 51);
 		map.mapRect(-100, -200, 1150, 51);
 		map.mapRect(-100, -250, 1100, 51);
@@ -317,7 +331,7 @@ let map = {
 		map.customTop = ()=>{};
 	},
 	level11() {
-		camera.zoom = 0.7
+		camera.zoom = 0.7;
 		map.sequenceLimit = 3;
 
 		// room 1
@@ -342,7 +356,7 @@ let map = {
 		map.bodyRect(-450, 275, 290, 25);
 		map.mapRect(-450, 90, 25, 150);
 		let button2 = map.button(-625, 290, 100, 10);
-		let door2 = map.door(-525, 90, 25, 110, 10);
+		let door2 = map.door(-600, 90, 25, 110, 10);
 		map.deathRect(-650, -50, 300, 140);
 
 		// room 3
@@ -407,7 +421,7 @@ let map = {
 	},
 	level14() {
 		camera.zoom = 0.6;
-		map.sequenceLimit = 4;
+		map.sequenceLimit = 3;
 		map.mapRect(-250, 50, 1150, 50);
 		map.mapRect(-250, -100, 50, 200);
 		map.mapRect(-400, -100, 200, 50);
@@ -421,8 +435,8 @@ let map = {
 		let jumpBoost = map.boost(0, -160, "jump");
 
 		map.mapRect(-400, -300, 1000, 100);
-		map.mapRect(300, -450, 50, 200);
-		map.deathRect(300, -460, 50, 10);
+		map.mapRect(300, -441, 50, 191);
+		map.deathRect(300, -450, 50, 10);
 		map.mapRect(300, -425, 170, 100);
 		map.mapRect(500, -650, 150, 50);
 		map.mapRect(600, -850, 50, 250);
@@ -431,8 +445,7 @@ let map = {
 
 		map.bodyRect(0, -430, 50, 130);
 		map.mapRect(-250, -650, 200, 50);
-		map.mapRect(-250, -1000, 50, 400);
-		let button3 = map.button(-175, -660, 100, 10);
+		let button3 = map.button(-200, -660, 100, 10);
 
 		map.mapRect(-400, -500, 250, 50);
 		let door1 = map.door(-230, -450, 20, 150);
@@ -462,6 +475,82 @@ let map = {
 		};
 	},
 	level15() {
+		camera.zoom = 0.8;
+		map.sequenceLimit = 2;
+		map.mapRect(-400, 100, 500, 50);
+		map.mapRect(-400, -500, 500, 50);
+		map.mapRect(-400, -500, 50, 650);
+		map.deathRect(75, -500, 25, 650);
+		map.mapRect(-200, -300, 50, 250);
+		map.mapRect(-200, -100, 300, 50);
+		map.mapRect(-200, -300, 300, 50);
+		map.bodyRect(-250, -450, 50, 550);
+		map.exit = new Rect(-72.5, -340, 20, 40);
+		map.custom = () => {};
+		map.customBottom = () => {};
+		map.customTop = () => {};
+	},
+	level16() {
+		camera.zoom = 0.8;
+		map.sequenceLimit = 3;
+		map.mapRect(-100, 100, 1000, 50);
+
+		map.deathRect(-100, -400, 50, 550);
+		map.mapRect(-100, -400, 200, 200);
+
+		map.deathRect(850, -400, 50, 550);
+		map.mapRect(700, -400, 200, 200);
+
+		map.deathRect(100, -400, 600, 25);
+
+		map.mapRect(-100, -225, 320, 25);
+		map.mapRect(580, -225, 320, 25);
+		map.bodyRect(240, -250, 50, 350);
+
+		let button = map.button(110, -235, 100, 10);
+		let button2 = map.button(590, -235, 100, 10);
+		let door = map.door(650, -200, 25, 300);
+		let door2 = map.door(725, -200, 25, 300);
+		map.exit = new Rect(790, 60, 20, 40);
+		map.custom = () => {
+			button.query();
+			button2.query();
+			door.isOpen = button.isPressed;
+			door.query();
+			door2.isOpen = button2.isPressed;
+			door2.query();
+		};
+		map.customBottom = () => {
+			button.draw();
+			button2.draw();
+		};
+		map.customTop = () => {};
+	},
+	/*level17() {
+		camera.zoom = 0.8;
+		map.sequenceLimit = 3;
+		map.mapRect(-100, 100, 1000, 50);
+
+		map.deathRect(-100, -400, 50, 550);
+		map.mapRect(-100, -400, 200, 200);
+
+		map.deathRect(850, -400, 50, 550);
+		map.mapRect(700, -400, 200, 200);
+
+		map.deathRect(100, -400, 600, 25);
+
+		let button = map.button(110, -235, 100, 10);
+		let button2 = map.button(590, -235, 100, 10);
+
+		map.exit = new Rect(1e100, 1e10, 20, 40);
+		map.custom = () => {};
+		map.customBottom = () => {
+			button.draw();
+			button2.draw();
+		};
+		map.customTop = () => {};
+	},*/
+	level17() {
 		map.sequenceLimit = 1e15;
 		camera.zoom = 0.5;
 		map.mapRect(-1e15, 100, 2e15, 1e15);
@@ -480,7 +569,7 @@ let map = {
 			ctx.textAlign = 'center';
 			ctx.fillText("Thanks for playing!", cam.getX(0), cam.getY(-300));
 			ctx.font = '30px Arial';
-			ctx.fillText("Press S to create a new sequence and cause chaos", cam.getX(0), cam.getY(-200));
+			ctx.fillText("Press N to create a new sequence and cause chaos", cam.getX(0), cam.getY(-200));
 		};
 	},
 	level: 1,

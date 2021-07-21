@@ -1,5 +1,6 @@
 let c = document.querySelector("#c");
 let ctx = c.getContext("2d");
+let ctx2 = document.querySelector("#c2").getContext("2d");
 
 let camera = {
 	pos: {x: 0, y: 0},
@@ -12,9 +13,20 @@ let camera = {
 	},
 	pZ(l) {
 		return l * camera.zoom;
-	}
+	},
+	exitGlow: []
 }
 let cam = camera;
+for (let i = 0; i < 10; i++) {
+	let duration = Math.random()*100 + 200
+	cam.exitGlow.push({
+		speed: Math.random()*0.15 + 0.25,
+		duration,
+		time: (duration - 25)*Math.random() + 25,
+		size: Math.random()*4 + 2,
+		angle: Math.random()*2*Math.PI
+	})
+}
 
 function drawRect(rect) {
 	ctx.fillRect(cam.getX(rect.pos.x), cam.getY(rect.pos.y), cam.pZ(rect.width), cam.pZ(rect.height))
@@ -22,6 +34,7 @@ function drawRect(rect) {
 function strokeRect(rect) {
 	ctx.strokeRect(cam.getX(rect.pos.x), cam.getY(rect.pos.y), cam.pZ(rect.width), cam.pZ(rect.height))
 }
+
 modifiers.jump.draw = function(x, y, size = 40) {
 	x = cam.getX(x);
 	y = cam.getY(y);
@@ -39,6 +52,7 @@ modifiers.jump.draw = function(x, y, size = 40) {
 	ctx.lineTo(x + cam.pZ(size/2), y);
 	ctx.fill();
 }
+
 function drawExit() {
 	let exitPos = map.exit.pos;
 	ctx.fillStyle = '#2dd';
@@ -56,6 +70,33 @@ function drawExit() {
 	ctx.lineTo(x2, y2);
 	ctx.lineTo(x2, y1);
 	ctx.fill();
+}
+
+function drawExitParticles() {
+	for (let i in cam.exitGlow) {
+		let part = cam.exitGlow[i];
+		part.time++;
+		if (part.time > part.duration) {
+			let duration = Math.random()*100 + 200
+			cam.exitGlow[i] = {
+				speed: Math.random()*0.15 + 0.25,
+				duration,
+				time: 25,
+				size: Math.random()*4 + 2,
+				angle: Math.random()*2*Math.PI
+			}
+			part = cam.exitGlow[i];
+		}
+		ctx.beginPath();
+		ctx.moveTo(cam.getX(map.exit.pos.x + Math.cos(part.angle)*part.time*part.speed + 10), cam.getY(map.exit.pos.y + Math.sin(part.angle)*part.time*part.speed));
+		ctx.lineTo(cam.getX(map.exit.pos.x + Math.cos(part.angle)*part.time*part.speed + 10), cam.getY(map.exit.pos.y + Math.sin(part.angle)*part.time*part.speed));
+		ctx.lineCap = "round";
+		ctx.lineWidth = part.size*Math.sin(Math.sqrt((part.time-25)/(part.duration-25))*Math.PI);
+		ctx.strokeStyle = "#bff";
+		ctx.shadowColor = "#bff";
+		ctx.shadowBlur = 10;
+		ctx.stroke();
+	}
 }
 
 
@@ -139,23 +180,25 @@ function drawAll() {
 		for (let i in map.simPSequence) {
 			let sP = map.simPSequence[i];
 			ctx.lineWidth = 2;
-			ctx.fillStyle = (sP.meta.ended ? '#998866' : '#11aa88') + Math.round(90 - Math.sin(map.sequenceTime/10)*30).toString(16);
-			ctx.shadowColor = sP.meta.ended ? '#d55a' : '#0ffa';
+			ctx.fillStyle = (sP.meta.ended ? '#337766' : '#11aa88') + Math.round(90 - Math.sin(map.sequenceTime/10)*30).toString(16);
+			ctx.shadowColor = sP.meta.ended ? '#599a' : '#0ffa';
 			ctx.shadowBlur = 15;
-			ctx.strokeStyle = sP.meta.ended ? '#d55a' : '#0ffa';
+			ctx.strokeStyle = sP.meta.ended ? '#599a' : '#0ffa';
 			drawRect(sP);
 			strokeRect(sP);
 
 			ctx.beginPath();
 			ctx.lineWidth = 3;
-			ctx.strokeStyle = (sP.meta.ended ? '#f00d' : '#0ffd');
-			ctx.shadowColor = (sP.meta.ended ? '#f00' : '#0ff');
+			ctx.strokeStyle = (sP.meta.ended ? '#599d' : '#0ffd');
+			ctx.shadowColor = (sP.meta.ended ? '#599' : '#0ff');
 			ctx.shadowBlur = 15;
 			ctx.moveTo(cam.getX(sP.pos.x) + cam.pZ(sP.width)/2, cam.getY(sP.pos.y) + cam.pZ(sP.height)/2);
 			ctx.lineTo(cam.getX(0), cam.getY(0));
 			ctx.stroke();
 		}
 	}
+
+	drawExitParticles();
 
 	map.customTop();
 

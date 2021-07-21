@@ -28,11 +28,6 @@ let player = {
 	},
 	collWBlock: false,
 }
-let modifiers = {
-	jump: {
-		active: false
-	}
-}
 let settings = {
 	paused: false,
 }
@@ -45,28 +40,6 @@ function cont() {
 	settings.paused = false;
 	document.querySelector('#optionsmodal').style.display = "none";
 	document.querySelector('#modal-bg').style.display = "none";
-}
-let modDescs = {
-	jump: "Jump Boost: jump higher when near your past selves",
-}
-function updateModifierHUD() {
-	let modifierSum = 0;
-	for (let i in player.modifiers) {
-		modifierSum += player.modifiers[i];
-	}
-	if (modifierSum <= 0) {
-		document.querySelector("#modifierdiv").style.display = "none";
-		return;
-	} else {
-		document.querySelector("#modifierdiv").style.display = "block";
-	}
-	let str = "<h3 style='font-size: 30px'>Modifiers</h3>";
-	for (let i in player.modifiers) {
-		str += modDescs[i];
-		if (player.modifiers[i] > 1) str += " (x" + player.modifiers[i] + ")";
-		str += "<br>";
-	}
-	document.querySelector("#modifiertext").innerHTML = str;
 }
 
 function loop() {
@@ -94,7 +67,13 @@ function loop() {
 	}
 	map.custom();
 	drawAll();
-	if (!player.deathTimer) map.sequenceTime++;
+	if (!player.deathTimer) {
+		map.sequenceTCounter += 1/(1+p.isInsideGrp(map.simBSequence, 7));
+		if (map.sequenceTCounter >= 1) {
+			map.sequenceTime++;
+			map.sequenceTCounter = 0;
+		}
+	}
 }
 
 let interval;

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html style="margin: 0; background-color: #000; overflow: hidden; font: 30px sans-serif;">
+<html style="margin: 0; overflow: hidden; font: 30px sans-serif;">
 <head>
 	<script src="js/rect.js" defer></script>
 	<script src="js/index.js" defer></script>
 	<script src="js/levels.js" defer></script>
+	<script src="js/modifiers.js" defer></script>
 	<script src="js/physics.js" defer></script>
 	<script src="js/controls.js" defer></script>
 	<script src="js/canvas.js" defer></script>
@@ -85,10 +86,11 @@
 
 		* {
 			font-family: sans-serif;
+			user-select: none;
 		}
 	</style>
 </head>
-<body style="width: 100vw; height: 100vh; margin: 0; padding: 0">
+<body style="width: 100vw; height: 100vh; margin: 0; padding: 0; background-color: #000;">
 	<div style="position: absolute;
 	width: 100%; height: 100%;
 	display: flex; flex-direction: column;
@@ -100,18 +102,18 @@
 	<div style="position: absolute;
 	width: 100%; height: 100%;
 	display: flex; flex-direction: column;
-	justify-content: center; align-items: center; display: none; z-index: 600; background: #000" id="controlsdiv">
+	justify-content: center; align-items: center; display: none; z-index: 600; background-color: #000" id="controlsdiv">
 		<h2 style="color: #fff">Controls</h2>
 		<p style="color: #fff">
-			w: jump<br><br>
-			a, d: move forwards/backwards<br><br>
-			shift+r: reset level<br><br>
+			wasd: movement<br><br>
+			shift+r: reset level
 		</p>
 		<button onclick="closeControls()" class="startBtn">Back</button>
 	</div>
 	<div style="display: none" id="gamediv">
 		<button class="smallBtn" onclick="pause()" style="position: absolute; z-index: 1">Options</button>
 		<canvas id="c" style="position: absolute;"></canvas>
+		<canvas id="c2" style="position: absolute; opacity: 0.2"></canvas>
 		<div id="sidediv">
 			<div id="sequencediv" style="display: none">
 				<span id="sequencetext">Sequences: 0 out of 0</span>

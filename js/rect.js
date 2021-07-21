@@ -27,6 +27,23 @@ class Rect {
 		return true;
 	}
 
+	isInside(other, allow = 1) {
+		let p1 = [this.pos.x, this.pos.y],
+			p2 = [this.pos.x + this.width, this.pos.y + this.height],
+			r1 = [other.pos.x - allow, other.pos.y - allow],
+			r2 = [other.pos.x + other.width + allow, other.pos.y + other.height + allow];
+		 
+		return (p1[0] > r1[0] && p2[0] < r2[0]) && (p1[1] > r1[1] && p2[1] < r2[1])
+	}
+
+	isInsideGrp(grp, allow = 1) {
+		for (let i in grp) {
+			if (this.isInside(grp[i], allow)) return true;
+		}
+
+		return false;
+	}
+
 	move(x, y) {
 		this.pos.x += x;
 		this.pos.y += y;
@@ -44,6 +61,7 @@ class Rect {
 	fixPos(vel, xy, mapEls = map.map.concat(map.bodies)) {
 		let sign = Math.sign(vel);
 		if (sign == 0) return;
+		if (!Array.isArray(mapEls)) mapEls = [mapEls];
 		mapEls = mapEls.filter(_ => _.isColliding(this));
 		let wh = (xy == "x") ? "width" : "height";
 		for (let i in mapEls) {

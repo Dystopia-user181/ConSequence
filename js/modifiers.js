@@ -1,7 +1,7 @@
 let modifiers = {
 	jump: {
 		active: false,
-		desc: "Jump Boost: jump higher when near your past selves"
+		desc: "Jump Boost: jump higher when near your parallel selves"
 	}
 }
 

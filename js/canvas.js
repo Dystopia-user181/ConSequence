@@ -28,10 +28,12 @@ for (let i = 0; i < 10; i++) {
 	})
 }
 
-function drawRect(rect) {
+function drawRect(rect, y, width, height) {
+	if (typeof rect == "number") rect = new Rect(rect, y, width, height);
 	ctx.fillRect(cam.getX(rect.pos.x), cam.getY(rect.pos.y), cam.pZ(rect.width), cam.pZ(rect.height))
 }
-function strokeRect(rect) {
+function strokeRect(rect, y, width, height) {
+	if (y) rect = new Rect(rect, y, width, height);
 	ctx.strokeRect(cam.getX(rect.pos.x), cam.getY(rect.pos.y), cam.pZ(rect.width), cam.pZ(rect.height))
 }
 
@@ -137,6 +139,12 @@ function drawAll() {
 		ctx.shadowBlur = 15;
 		ctx.fillStyle = '#1f1';
 		drawRect(player.rect);
+
+		let facing = 14*(player.dir == "r");
+		ctx.shadowBlur = 0;
+		ctx.fillStyle = '#19f';
+		drawRect(player.rect.pos.x + 2 + facing, player.rect.pos.y + 3, 4, 11);
+		drawRect(player.rect.pos.x + 10 + facing, player.rect.pos.y + 3, 4, 11);
 
 		if (modifiers.jump.active) {
 			modifiers.jump.draw(player.rect.pos.x + 25, player.rect.pos.y - 35, 15);

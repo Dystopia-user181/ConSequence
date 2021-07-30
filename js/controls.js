@@ -2,8 +2,8 @@ window.addEventListener("keydown", e => {
 	let key = e.key;
 	if (key.toLowerCase() != "r") key = key.toLowerCase();
 	switch (key) {
-		case "a": controls.backward = 1; break
-		case "d": controls.forward = 1; break
+		case "a": controls.backward = 1; player.dir = "l"; break
+		case "d": controls.forward = 1; player.dir = "r"; break
 		case "w": controls.jump = 1; break
 		case "s": controls.down = 1; break
 		case "n": if (map.level == 17) newSequence(); break

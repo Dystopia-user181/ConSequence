@@ -27,6 +27,7 @@ let player = {
 		jump: 0,
 	},
 	collWBlock: false,
+	dir: "r"
 }
 let settings = {
 	paused: false,

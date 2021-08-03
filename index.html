@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html style="margin: 0; overflow: hidden; font: 30px sans-serif;">
+<html style="margin: 0; overflow: hidden; font: 30px monospace; font-weight: 100;">
 <head>
 	<script src="js/rect.js" defer></script>
 	<script src="js/index.js" defer></script>
@@ -29,7 +29,7 @@
 		#optionsmodal {
 			position: absolute;
 			z-index: 500;
-			color: #fff;
+			color: #8ff;
 			border: 2px solid;
 			top: 50%;
 			left: 50%;
@@ -38,6 +38,7 @@
 			text-align: center;
 			width: 500px;
 			transform: translate(-50%, -50%);
+			box-shadow: 0 0 5px 1px #8ff;
 		}
 		#modal-bg {
 			position: absolute;
@@ -55,7 +56,7 @@
 
 		#sequencediv, #modifierdiv {
 			padding: 3px;
-			color: #fff;
+			color: #8ff;
 			background-color: #0138;
 		}
 		#modifierdiv {
@@ -64,29 +65,33 @@
 		}
 
 		.startBtn {
-			color: #fff;
+			color: #8ff;
 			background: #013;
 			border: 2px solid;
 			width: 250px;
 			height: 70px;
-			font: 30px sans-serif;
+			font: 30px monospace;
+			font-weight: 100;
 			margin: 5px
 		}
 
 		.smallBtn {
-			color: #fff;
+			color: #8ff;
 			background: #013;
 			border: 1px solid;
 			border-radius: 5px;
 			width: 100px;
 			height: 40px;
-			font: 20px sans-serif;
+			font: 20px monospace;
+			font-weight: 100;
 			margin: 5px
 		}
 
 		* {
-			font-family: sans-serif;
+			font-family: monospace;
+			font-weight: 100;
 			user-select: none;
+			text-shadow: 0 0 5px #8ff;
 		}
 	</style>
 </head>
@@ -95,7 +100,7 @@
 	width: 100%; height: 100%;
 	display: flex; flex-direction: column;
 	justify-content: center; align-items: center;" id="startdiv">
-		<h2 style="color: #fff">ConSequence</h2>
+		<h2 style="color: #8ff">ConSequence</h2>
 		<button onclick="start()" class="startBtn">Play</button>
 		<button onclick="openControls()" class="startBtn">Controls</button>
 	</div>
@@ -103,17 +108,20 @@
 	width: 100%; height: 100%;
 	display: flex; flex-direction: column;
 	justify-content: center; align-items: center; display: none; z-index: 600; background-color: #013" id="controlsdiv">
-		<h2 style="color: #fff">Controls</h2>
-		<p style="color: #fff">
+		<h2 style="color: #8ff">Controls</h2>
+		<p style="color: #8ff">
 			wasd: movement<br><br>
 			shift+r: reset level
 		</p>
 		<button onclick="closeControls()" class="startBtn">Back</button>
 	</div>
+	<div id="level-anim" style="display: none; position: absolute;
+	width: 100%; height: 100%;
+	top: 0; left: 0; z-index: 1000; background-color: #0ab;
+	opacity: 0; transition: opacity 2s"></div>
 	<div style="display: none" id="gamediv">
 		<button class="smallBtn" onclick="pause()" style="position: absolute; z-index: 1">Options</button>
 		<canvas id="c" style="position: absolute;"></canvas>
-		<canvas id="c2" style="position: absolute; opacity: 0.2"></canvas>
 		<div id="sidediv">
 			<div id="sequencediv" style="display: none">
 				<span id="sequencetext">Sequences: 0 out of 0</span>

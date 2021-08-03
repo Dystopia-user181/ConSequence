@@ -22,6 +22,7 @@ let player = {
 		}
 	},
 	dead: false,
+	newLevelAnim: false,
 	sequence: [],
 	modifiers: {
 		jump: 0,
@@ -43,38 +44,53 @@ function cont() {
 	document.querySelector('#modal-bg').style.display = "none";
 }
 
+let levelAnim = document.querySelector('#level-anim').style;
 function loop() {
 	if (settings.paused) return;
 	let p = player.rect;
-	player.move();
-	for (let i in map.simBSequence) {
-		let b = map.simBSequence[i];
-		if (b.meta.collide || b.isColliding(p)) continue;
-		b.meta.collide = true;
-	}
-	if (player.deathTimer) {player.deathTimer--; player.die()} else {
-		player.dead = false;
-	}
-	if (p.isColliding(map.exit)) {map.level++; map.new();}
-	for (let i in map.simPSequence) {
-		map.simPSequence[i].pos = {...map.playerSequences[i][Math.min(map.sequenceTime, map.playerSequences[i].length-1)]};
-		if (map.sequenceTime > map.playerSequences[i].length-1) map.simPSequence[i].meta.ended = true;
-	}
-	for (let i in map.simBSequence) {
-		let bS = map.simBSequence[i];
-		let b = map.blockSequences[i].s[Math.min(map.sequenceTime, map.blockSequences[i].s.length-1)];
-		bS.pos = {...b.pos};
-		bS.meta.prevPos = {...(map.sequenceTime > map.blockSequences[i].s.length-1 ? b.pos : b.prevPos)};
-	}
-	map.custom();
-	drawAll();
-	if (!player.deathTimer) {
-		map.sequenceTCounter += 1/(1+p.isInsideGrp(map.simBSequence, 7));
-		if (map.sequenceTCounter >= 1) {
-			map.sequenceTime++;
-			map.sequenceTCounter = 0;
+	if (p.isColliding(map.exit) && !player.newLevelAnim) {
+		levelAnim.display = "block";
+		setTimeout(() => levelAnim.opacity = 1, 10);
+		player.newLevelAnim = true;
+		setTimeout(() => {
+			map.level++;
+			map.new();
+			levelAnim.opacity = 0;
+			setTimeout(() => {
+				player.newLevelAnim = false;
+				levelAnim.display = "none";
+			}, 1500)
+		}, 2000);
+	} else if (!player.newLevelAnim) {
+		player.move();
+		for (let i in map.simBSequence) {
+			let b = map.simBSequence[i];
+			if (b.meta.collide || b.isColliding(p)) continue;
+			b.meta.collide = true;
+		}
+		if (player.deathTimer) {player.deathTimer--; player.die()} else {
+			player.dead = false;
+		}
+		for (let i in map.simPSequence) {
+			map.simPSequence[i].pos = {...map.playerSequences[i][Math.min(map.sequenceTime, map.playerSequences[i].length-1)]};
+			if (map.sequenceTime > map.playerSequences[i].length-1) map.simPSequence[i].meta.ended = true;
+		}
+		for (let i in map.simBSequence) {
+			let bS = map.simBSequence[i];
+			let b = map.blockSequences[i].s[Math.min(map.sequenceTime, map.blockSequences[i].s.length-1)];
+			bS.pos = {...b.pos};
+			bS.meta.prevPos = {...(map.sequenceTime > map.blockSequences[i].s.length-1 ? b.pos : b.prevPos)};
+		}
+		map.custom();
+		if (!player.deathTimer) {
+			map.sequenceTCounter += 1/(1+p.isInsideGrp(map.simBSequence, 7));
+			if (map.sequenceTCounter >= 1) {
+				map.sequenceTime++;
+				map.sequenceTCounter = 0;
+			}
 		}
 	}
+	drawAll();
 }
 
 let interval;

@@ -104,18 +104,6 @@ function moveBlocksX() {
 			b.meta.logPos = true;
 			let iter = 0;
 			let xSign = Math.sign(prevVelX);
-			
-			for (let j in map.blocks) {
-				let b1 = map.blocks[j];
-				if (b1 == b || !b1.isColliding(b)) continue;
-				let iter = 0;
-				let xSign = Math.sign(player.velX)
-				while (b1.isColliding(b) && iter < Math.abs(prevVelX)) {
-					iter++;
-					b.pos.x -= xSign/2;
-					if (!map.isCollMap(b1)) b1.pos.x += xSign/2;
-				}
-			}
 
 			if (isColl) {
 				if (xSign == 1) p.pos.x = b.pos.x - p.width;

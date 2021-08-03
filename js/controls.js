@@ -6,7 +6,7 @@ window.addEventListener("keydown", e => {
 		case "d": controls.forward = 1; player.dir = "r"; break
 		case "w": controls.jump = 1; break
 		case "s": controls.down = 1; break
-		case "n": if (map.level == 17) newSequence(); break
+		case "n": if (map.level == 18) newSequence(); break
 		case "R": map.new(); cont(); break
 	}
 })

@@ -1,6 +1,5 @@
 let c = document.querySelector("#c");
 let ctx = c.getContext("2d");
-let ctx2 = document.querySelector("#c2").getContext("2d");
 
 let camera = {
 	pos: {x: 0, y: 0},
@@ -212,7 +211,10 @@ function drawAll() {
 
 	if (player.dead) {
 		ctx.fillStyle = '#d003';
+		c.style.backgroundColor = '#000';
 		ctx.fillRect(0, 0, c.width, c.height);
+	} else {
+		c.style.backgroundColor = '#0000';
 	}
 }
 

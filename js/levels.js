@@ -124,31 +124,107 @@ let map = {
 	level1() {
 		camera.zoom = 1
 		map.sequenceLimit = 0;
-		map.mapRect(-100, 100, 750, 25);
 		for (let i = 0; i < 3; i++) {
 			map.mapRect(-100, 100 - i*200, 200, 25);
 			map.mapRect(150, 0 - i*200, 200, 25);
 		}
-		map.mapRect(350, -400, 50, 500);
-		map.exit = new Rect(550, 60, 20, 40);
+		map.mapRect(-400, -500, 500, 25);
+		map.mapRect(-400, -1225, 25, 750);
+		map.mapRect(-200, -1225, 25, 650);
+		for (let i = 0; i < 2; i++) {
+			map.mapRect(-400, -650 - i*300, 27, 25);
+			map.mapRect(-202, -800 - i*300, 27, 25);
+		}
+		map.mapRect(-230, -1240, 500, 25);
+		map.exit = new Rect(200, -1280, 20, 40);
 		map.custom = ()=>{};
-		map.customBottom = ()=>{};
+		map.customBottom = ()=>{
+			ctx.fillStyle = '#fff';
+			ctx.shadowBlur = 15;
+			ctx.shadowColor = '#fff';
+			ctx.font = '30px monospace';
+			ctx.textAlign = 'left';
+			ctx.fillText("A long journey awaits you.", cam.getX(-350), cam.getY(-550));
+		};
 		map.customTop = ()=>{};
 	},
 	level2() {
 		camera.zoom = 1
 		map.sequenceLimit = 0;
-		map.mapRect(-100, 100, 950, 25);
-		map.mapRect(850, 125, 25, 25);
-		map.mapRect(1350, 125, 25, 25);
-		map.mapRect(1375, 100, 750, 25);
-		map.bodyRect(300, 50, 500, 25);
-		map.exit = new Rect(1700, 60, 20, 40);
+		map.mapRect(-100, 100, 525, 25);
+		map.mapRect(400, 100, 25, 500);
+		map.mapRect(525, -300, 25, 900);
+		map.mapRect(400, 700, 150, 25);
+		map.mapRect(300, 575, 125, 25);
+		map.mapRect(525, 575, 125, 25);
+
+		map.mapRect(300, 575, 25, 825);
+		map.mapRect(625, 575, 25, 825);
+		map.mapRect(400, 700, 25, 700);
+		map.mapRect(525, 700, 25, 900);
+
+		map.mapRect(525, 1575, 700, 25);
+
+		for (let i = 0; i < 15; i++) {
+			map.mapRect(900 + i*50, 1500 - i*50, 50, 12);
+			if (i < 5) map.mapRect(1750 + i*200, 700, 60, 12);
+		}
+
+		map.mapRect(1669, 0, 12, 600);
+		map.exit = new Rect(2570, 660, 20, 40);
 		map.custom = ()=>{};
-		map.customBottom = ()=>{};
+		map.customBottom = ()=>{
+			ctx.fillStyle = '#fff';
+			ctx.shadowBlur = 15;
+			ctx.shadowColor = '#fff';
+			ctx.font = '30px monospace';
+			ctx.textAlign = 'left';
+			ctx.fillText("Many challenges are ahead.", cam.getX(0), cam.getY(-200));
+			ctx.fillText("Challenges of time.", cam.getX(575), cam.getY(1500));
+		};
 		map.customTop = ()=>{};
 	},
 	level3() {
+		camera.zoom = 1
+		map.sequenceLimit = 0;
+		map.mapRect(-100, 100, 950, 25);
+		map.mapRect(825, 125, 50, 25);
+		map.mapRect(1350, 125, 50, 25);
+		map.mapRect(1375, 100, 500, 25);
+		map.bodyRect(300, 50, 500, 25);
+
+		map.mapRect(1900, -50, 100, 25);
+		map.mapRect(1900, -210, 100, 25);
+		map.mapRect(1900, -300, 100, 25);
+		map.mapRect(1900, -400, 100, 25);
+		map.mapRect(1300, -500, 500, 25);
+		map.bodyRect(1500, -600, 100, 100);
+		map.mapRect(1400, -800, 25, 150);
+		map.mapRect(1300, -700, 25, 225);
+
+		map.mapRect(1400, -800, 800, 25);
+		map.mapRect(1500, -950, 600, 25);
+		map.mapRect(1475, -975, 26, 50);
+		map.mapRect(2099, -975, 26, 50);
+		map.mapRect(1250, -900, 100, 25);
+		map.mapRect(2350, -900, 100, 25);
+		map.mapRect(1100, -1000, 100, 25);
+		map.mapRect(1100, -1100, 100, 25);
+		map.mapRect(1250, -1200, 250, 25);
+		map.mapRect(2100, -1200, 250, 25);
+		map.bodyRect(1510, -1300, 50, 350);
+		map.exit = new Rect(2200, -1240, 20, 40);
+		map.custom = ()=>{};
+		map.customBottom = ()=>{
+			ctx.fillStyle = '#fff';
+			ctx.shadowBlur = 15;
+			ctx.shadowColor = '#fff';
+			ctx.font = '30px monospace';
+			ctx.textAlign = 'left';
+			ctx.fillText("In a broken landscape.", cam.getX(0), cam.getY(-100));};
+		map.customTop = ()=>{};
+	},
+	level4() {
 		camera.zoom = 1
 		map.sequenceLimit = 0;
 		map.mapRect(-100, 100, 725, 25);
@@ -163,7 +239,7 @@ let map = {
 		map.customBottom = ()=>{};
 		map.customTop = ()=>{};
 	},
-	level4() {
+	level5() {
 		camera.zoom = 1
 		map.sequenceLimit = 0;
 		map.mapRect(-100, 100, 200, 25);
@@ -171,10 +247,17 @@ let map = {
 		map.mapRect(1100, 100, 200, 25);
 		map.exit = new Rect(1190, 60, 20, 40);
 		map.custom = ()=>{};
-		map.customBottom = ()=>{};
+		map.customBottom = ()=>{
+			ctx.fillStyle = '#fff';
+			ctx.shadowBlur = 15;
+			ctx.shadowColor = '#fff';
+			ctx.font = '30px monospace';
+			ctx.textAlign = 'left';
+			ctx.fillText("Sometimes, dying is important.", cam.getX(200), cam.getY(-100));
+		};
 		map.customTop = ()=>{};
 	},
-	level5() {
+	level6() {
 		camera.zoom = 1
 		map.sequenceLimit = 0;
 		map.mapRect(-100, 100, 200, 25);
@@ -187,10 +270,17 @@ let map = {
 		map.mapRect(770, -65, 25, 165);
 		map.exit = new Rect(1190, 60, 20, 40);
 		map.custom = ()=>{};
-		map.customBottom = ()=>{};
+		map.customBottom = ()=>{
+			ctx.fillStyle = '#fff';
+			ctx.shadowBlur = 15;
+			ctx.shadowColor = '#fff';
+			ctx.font = '30px monospace';
+			ctx.textAlign = 'left';
+			ctx.fillText("Dying may be a double edged sword.", cam.getX(200), cam.getY(0));
+		};
 		map.customTop = ()=>{};
 	},
-	level6() {
+	level7() {
 		camera.zoom = 0.8
 		map.sequenceLimit = 0;
 		map.mapRect(-200, 100, 100, 860);
@@ -218,7 +308,7 @@ let map = {
 		};
 		map.customTop = () => {};
 	},
-	level7() {
+	level8() {
 		camera.zoom = 1
 		map.sequenceLimit = 2;
 		map.mapRect(-500, 100, 1000, 50);
@@ -238,11 +328,17 @@ let map = {
 			door.query();
 		};
 		map.customBottom = () => {
+			ctx.fillStyle = '#fff';
+			ctx.shadowBlur = 15;
+			ctx.shadowColor = '#fff';
+			ctx.font = '30px monospace';
+			ctx.textAlign = 'center';
+			ctx.fillText("Dying is more important than you think.", cam.getX(0), cam.getY(-200));
 			button.draw();
 		};
 		map.customTop = () => {};
 	},
-	level8() {
+	level9() {
 		camera.zoom = 0.8;
 		map.sequenceLimit = 2;
 		map.mapRect(-300, 100, 1100, 50);
@@ -260,11 +356,17 @@ let map = {
 			door.query();
 		};
 		map.customBottom = () => {
+			ctx.fillStyle = '#fff';
+			ctx.shadowBlur = 15;
+			ctx.shadowColor = '#fff';
+			ctx.font = '30px monospace';
+			ctx.textAlign = 'left';
+			ctx.fillText("Planning is important.", cam.getX(0), cam.getY(-100));
 			button.draw();
 		};
 		map.customTop = ()=>{};
 	},
-	level9() {
+	level10() {
 		camera.zoom = 1
 		map.sequenceLimit = 2;
 		map.mapRect(-325, 100, 750, 25);
@@ -294,7 +396,7 @@ let map = {
 		};
 		map.customTop = ()=>{};
 	},
-	level10() {
+	level11() {
 		camera.zoom = 0.7
 		map.sequenceLimit = 3;
 
@@ -330,7 +432,7 @@ let map = {
 		};
 		map.customTop = ()=>{};
 	},
-	level11() {
+	level12() {
 		camera.zoom = 0.7;
 		map.sequenceLimit = 3;
 
@@ -386,7 +488,7 @@ let map = {
 			button2.draw();
 		};
 	},
-	level12() {
+	level13() {
 		camera.zoom = 1;
 		map.sequenceLimit = 2;
 		map.mapRect(-100, 100, 700, 50);
@@ -401,7 +503,7 @@ let map = {
 		};
 		map.customTop = () => {};
 	},
-	level13() {
+	level14() {
 		camera.zoom = 1;
 		map.sequenceLimit = 2;
 		map.mapRect(-200, 100, 1500, 50);
@@ -419,7 +521,7 @@ let map = {
 		};
 		map.customTop = () => {};
 	},
-	level14() {
+	level15() {
 		camera.zoom = 0.6;
 		map.sequenceLimit = 3;
 		map.mapRect(-250, 50, 1150, 50);
@@ -474,7 +576,7 @@ let map = {
 			button2.draw();
 		};
 	},
-	level15() {
+	level16() {
 		camera.zoom = 0.8;
 		map.sequenceLimit = 2;
 		map.mapRect(-400, 100, 500, 50);
@@ -490,7 +592,7 @@ let map = {
 		map.customBottom = () => {};
 		map.customTop = () => {};
 	},
-	level16() {
+	level17() {
 		camera.zoom = 0.8;
 		map.sequenceLimit = 3;
 		map.mapRect(-100, 100, 1000, 50);
@@ -550,7 +652,7 @@ let map = {
 		};
 		map.customTop = () => {};
 	},*/
-	level17() {
+	level18() {
 		map.sequenceLimit = 1e15;
 		camera.zoom = 0.5;
 		map.mapRect(-1e15, 100, 2e15, 1e15);
@@ -565,14 +667,14 @@ let map = {
 			ctx.fillStyle = '#fff';
 			ctx.shadowBlur = 15;
 			ctx.shadowColor = '#fff';
-			ctx.font = '40px Arial';
+			ctx.font = '40px monospace';
 			ctx.textAlign = 'center';
 			ctx.fillText("Thanks for playing!", cam.getX(0), cam.getY(-300));
-			ctx.font = '30px Arial';
+			ctx.font = '30px monospace';
 			ctx.fillText("Press N to create a new sequence and cause chaos", cam.getX(0), cam.getY(-200));
 		};
 	},
-	level: 1,
+	level: 3,
 	custom() {},
 	customBottom() {},
 	customTop() {},

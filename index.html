@@ -70,8 +70,7 @@
 			border: 2px solid;
 			width: 250px;
 			height: 70px;
-			font: 30px monospace;
-			font-weight: 100;
+			font-size: 30px;
 			margin: 5px
 		}
 
@@ -82,16 +81,34 @@
 			border-radius: 5px;
 			width: 100px;
 			height: 40px;
-			font: 20px monospace;
-			font-weight: 100;
+			font-size: 20px;
 			margin: 5px
+		}
+
+		.controlBtn {
+			color:  #8ff;
+			background: #013;
+			border: 2px solid;
+			border-radius: 3px;
+			width: 70px;
+			height: 55px;
+			font-size: 20px;
+			margin: 3px;
+		}
+		.controlBtn.active {
+			color: #013;
+			background: #8ff;
+			text-shadow: 0 0 5px #013;
+			border-color: #8ff;
 		}
 
 		* {
 			font-family: monospace;
 			font-weight: 100;
 			user-select: none;
+			touch-action: manipulation;
 			text-shadow: 0 0 5px #8ff;
+			outline: none;
 		}
 	</style>
 </head>
@@ -121,6 +138,20 @@
 	opacity: 0; transition: opacity 2s"></div>
 	<div style="display: none" id="gamediv">
 		<button class="smallBtn" onclick="pause()" style="position: absolute; z-index: 1">Options</button>
+		<div id="mobile-c" style="position: absolute; z-index: 2; left: 5px; bottom: 5px;">
+			<button class="controlBtn" style="width: 146px" onclick="map.new()">Reset Level</button>
+			<br>
+			<div style="display: flex">
+				<button class="controlBtn" style="visibility: hidden;">.</button>
+				<button class="controlBtn" id="control-w">W</button>
+				<button class="controlBtn" style="visibility: hidden;">.</button>
+			</div>
+			<div style="display: flex">
+			<button class="controlBtn" id="control-a">A</button>
+			<button class="controlBtn" id="control-s">S</button>
+			<button class="controlBtn" id="control-d">D</button>
+			</div>
+		</div>
 		<canvas id="c" style="position: absolute;"></canvas>
 		<div id="sidediv">
 			<div id="sequencediv" style="display: none">

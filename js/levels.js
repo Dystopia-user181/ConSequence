@@ -674,7 +674,7 @@ let map = {
 			ctx.fillText("Press N to create a new sequence and cause chaos", cam.getX(0), cam.getY(-200));
 		};
 	},
-	level: 3,
+	level: 1,
 	custom() {},
 	customBottom() {},
 	customTop() {},

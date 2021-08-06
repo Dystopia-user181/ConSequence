@@ -276,7 +276,7 @@ let map = {
 			ctx.shadowColor = '#fff';
 			ctx.font = '30px monospace';
 			ctx.textAlign = 'left';
-			ctx.fillText("Dying may be a double edged sword.", cam.getX(200), cam.getY(0));
+			ctx.fillText("Dying may be a double edged sword.", cam.getX(0), cam.getY(0));
 		};
 		map.customTop = ()=>{};
 	},

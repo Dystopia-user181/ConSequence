@@ -79,6 +79,7 @@ let map = {
 	sequences: 1,
 	sequenceTime: 0,
 	sequenceTCounter: 0,
+	sequenceTimeLim: 0,
 	playerSequences: [],
 	blockSequences: [],
 	simPSequence: [],
@@ -110,11 +111,13 @@ let map = {
 		} else {
 			document.querySelector('#sequencediv').style.display = "none";
 		}
+		document.querySelector('#sequenceTime').style.display = map.sequenceTimeLim ? "inline" : "none"
 		updateModifierHUD();
 	},
 	exit: undefined,
 	levelTemplate() {
 		map.sequenceLimit = 0;
+		map.sequenceTimeLim = 0;
 		camera.zoom = 1;
 		map.exit = new Rect(0, 0, 20, 40);
 		map.custom = () => {};
@@ -124,6 +127,7 @@ let map = {
 	level1() {
 		camera.zoom = 1
 		map.sequenceLimit = 0;
+		map.sequenceTimeLim = 0;
 		for (let i = 0; i < 3; i++) {
 			map.mapRect(-100, 100 - i*200, 200, 25);
 			map.mapRect(150, 0 - i*200, 200, 25);
@@ -151,6 +155,7 @@ let map = {
 	level2() {
 		camera.zoom = 1
 		map.sequenceLimit = 0;
+		map.sequenceTimeLim = 0;
 		map.mapRect(-100, 100, 525, 25);
 		map.mapRect(400, 100, 25, 500);
 		map.mapRect(525, -300, 25, 900);
@@ -187,6 +192,7 @@ let map = {
 	level3() {
 		camera.zoom = 1
 		map.sequenceLimit = 0;
+		map.sequenceTimeLim = 0;
 		map.mapRect(-100, 100, 950, 25);
 		map.mapRect(825, 125, 50, 25);
 		map.mapRect(1350, 125, 50, 25);
@@ -227,6 +233,7 @@ let map = {
 	level4() {
 		camera.zoom = 1
 		map.sequenceLimit = 0;
+		map.sequenceTimeLim = 0;
 		map.mapRect(-100, 100, 725, 25);
 		for (let i = 0; i < 3; i++) {
 			map.mapRect(600 + i*350, 100, 25, 300);
@@ -242,10 +249,15 @@ let map = {
 	level5() {
 		camera.zoom = 1
 		map.sequenceLimit = 0;
+		map.sequenceTimeLim = 0;
 		map.mapRect(-100, 100, 200, 25);
 		map.deathRect(100, 125, 1000, 25);
-		map.mapRect(1100, 100, 200, 25);
-		map.exit = new Rect(1190, 60, 20, 40);
+
+		map.mapRect(1100, -65, 200, 25);
+		map.deathRect(1000, -265, 25, 200);
+		map.mapRect(500, -265, 500, 25);
+		map.deathRect(-200, -465, 600, 50);
+		map.exit = new Rect(-110, -505, 20, 40);
 		map.custom = ()=>{};
 		map.customBottom = ()=>{
 			ctx.fillStyle = '#fff';
@@ -260,6 +272,7 @@ let map = {
 	level6() {
 		camera.zoom = 1
 		map.sequenceLimit = 0;
+		map.sequenceTimeLim = 0;
 		map.mapRect(-100, 100, 200, 25);
 		map.mapRect(-200, -500, 100, 625);
 		map.deathRect(99, 100, 631, 25);
@@ -283,6 +296,7 @@ let map = {
 	level7() {
 		camera.zoom = 0.8
 		map.sequenceLimit = 0;
+		map.sequenceTimeLim = 0;
 		map.mapRect(-200, 100, 100, 860);
 		map.mapRect(-200, 100, 550, 300);
 		map.mapRect(300, 460, 400, 500);
@@ -311,6 +325,7 @@ let map = {
 	level8() {
 		camera.zoom = 1
 		map.sequenceLimit = 2;
+		map.sequenceTimeLim = 0;
 		map.mapRect(-500, 100, 1000, 50);
 		map.mapRect(-500, -100, 25, 250);
 		map.mapRect(-500, -100, 225, 25);
@@ -341,6 +356,7 @@ let map = {
 	level9() {
 		camera.zoom = 0.8;
 		map.sequenceLimit = 2;
+		map.sequenceTimeLim = 0;
 		map.mapRect(-300, 100, 1100, 50);
 		map.bodyRect(100, -100, 50, 80);
 		map.mapRect(700, -100, 300, 250);
@@ -369,6 +385,7 @@ let map = {
 	level10() {
 		camera.zoom = 1
 		map.sequenceLimit = 2;
+		map.sequenceTimeLim = 0;
 		map.mapRect(-325, 100, 750, 25);
 		map.mapRect(-250, -50, 675, 25);
 		map.mapRect(400, -50, 25, 175);
@@ -399,6 +416,7 @@ let map = {
 	level11() {
 		camera.zoom = 0.7
 		map.sequenceLimit = 3;
+		map.sequenceTimeLim = 0;
 
 		map.mapRect(-150, -800, 51, 950);
 		map.mapRect(1499, -800, 51, 950);
@@ -435,6 +453,7 @@ let map = {
 	level12() {
 		camera.zoom = 0.7;
 		map.sequenceLimit = 3;
+		map.sequenceTimeLim = 0;
 
 		// room 1
 		map.mapRect(-100, 50, 800, 50);
@@ -491,6 +510,7 @@ let map = {
 	level13() {
 		camera.zoom = 1;
 		map.sequenceLimit = 2;
+		map.sequenceTimeLim = 0;
 		map.mapRect(-100, 100, 700, 50);
 		map.mapRect(500, -200, 200, 350);
 		let jumpBoost = map.boost(400, 40, "jump");
@@ -506,6 +526,7 @@ let map = {
 	level14() {
 		camera.zoom = 1;
 		map.sequenceLimit = 2;
+		map.sequenceTimeLim = 0;
 		map.mapRect(-200, 100, 1500, 50);
 		map.mapRect(-200, -1000, 50, 1150);
 		map.mapRect(1200, -200, 200, 350);
@@ -524,6 +545,7 @@ let map = {
 	level15() {
 		camera.zoom = 0.6;
 		map.sequenceLimit = 3;
+		map.sequenceTimeLim = 0;
 		map.mapRect(-250, 50, 1150, 50);
 		map.mapRect(-250, -100, 50, 200);
 		map.mapRect(-400, -100, 200, 50);
@@ -579,6 +601,7 @@ let map = {
 	level16() {
 		camera.zoom = 0.8;
 		map.sequenceLimit = 2;
+		map.sequenceTimeLim = 0;
 		map.mapRect(-400, 100, 500, 50);
 		map.mapRect(-400, -500, 500, 50);
 		map.mapRect(-400, -500, 50, 650);
@@ -595,6 +618,7 @@ let map = {
 	level17() {
 		camera.zoom = 0.8;
 		map.sequenceLimit = 3;
+		map.sequenceTimeLim = 0;
 		map.mapRect(-100, 100, 1000, 50);
 
 		map.deathRect(-100, -400, 50, 550);
@@ -628,10 +652,13 @@ let map = {
 		};
 		map.customTop = () => {};
 	},
-	/*level17() {
+	level18() {
 		camera.zoom = 0.8;
 		map.sequenceLimit = 3;
-		map.mapRect(-100, 100, 1000, 50);
+		map.sequenceTimeLim = 0;
+		map.mapRect(-100, 100, 450, 50);
+		map.mapRect(450, 100, 450, 50);
+		map.bodyRect(350, -60, 100, 310);
 
 		map.deathRect(-100, -400, 50, 550);
 		map.mapRect(-100, -400, 200, 200);
@@ -641,19 +668,48 @@ let map = {
 
 		map.deathRect(100, -400, 600, 25);
 
+		map.mapRect(-100, -225, 320, 25);
+		map.mapRect(580, -225, 320, 25);
+
+		map.mapRect(150, 250, 500, 50);
+		map.deathRect(125, 150, 25, 150);
+		map.deathRect(650, 150, 25, 150);
+
 		let button = map.button(110, -235, 100, 10);
 		let button2 = map.button(590, -235, 100, 10);
+		let button3 = map.button(160, 240, 100, 10);
+		let button4 = map.button(540, 240, 100, 10);
+		let door = map.door(650, -200, 25, 300);
+		let door2 = map.door(725, -200, 25, 300);
+		let door3 = map.door(612.5, -200, 25, 300);
+		let door4 = map.door(687.5, -200, 25, 300);
 
-		map.exit = new Rect(1e100, 1e10, 20, 40);
-		map.custom = () => {};
+		map.exit = new Rect(790, 60, 20, 40);
+		map.custom = () => {
+			button.query();
+			button2.query();
+			button3.query();
+			button4.query();
+			door.isOpen = button.isPressed;
+			door.query();
+			door2.isOpen = button2.isPressed;
+			door2.query();
+			door3.isOpen = button3.isPressed;
+			door3.query();
+			door4.isOpen = button4.isPressed;
+			door4.query();
+		};
 		map.customBottom = () => {
 			button.draw();
 			button2.draw();
+			button3.draw();
+			button4.draw();
 		};
 		map.customTop = () => {};
-	},*/
-	level18() {
+	},
+	level19() {
 		map.sequenceLimit = 1e15;
+		map.sequenceTimeLim = 0;
 		camera.zoom = 0.5;
 		map.mapRect(-1e15, 100, 2e15, 1e15);
 		map.exit = new Rect(1e100, 1e100, 0, 0);
@@ -674,8 +730,57 @@ let map = {
 			ctx.fillText("Press N to create a new sequence and cause chaos", cam.getX(0), cam.getY(-200));
 		};
 	},
-	level: 1,
+	level: 5,
 	custom() {},
 	customBottom() {},
 	customTop() {},
 }
+let levelSelect = {
+	page: 0,
+	maxPage: 1,
+	maxLvl: 1,
+	select(btnId) {
+		if (levelSelect.page*10 + btnId > levelSelect.maxLvl) return;
+		map.level = levelSelect.page*10 + btnId;
+		start();
+	},
+	setBtnStyles() {
+		for (let i = 0; i++ < 10;) {
+			let el = document.querySelector('#lvl' + i);
+			el.innerText = i + levelSelect.page*10;
+
+			if (i + levelSelect.page*10 > levelSelect.maxLvl) el.style.opacity = 0.5;
+			else el.style.opacity = 1;
+
+			if (!map["level" + (i + levelSelect.page*10)]) el.style.visibility = "hidden";
+			else el.style.visibility = "visible";
+		}
+	},
+	prev() {
+		levelSelect.page = Math.max(0, levelSelect.page - 1);
+		if (levelSelect.page == 0) document.querySelector('#lvlprev').style.opacity = 0.5;
+		else document.querySelector('#lvlprev').style.opacity = 1;
+
+		document.querySelector('#lvlnext').style.opacity = 1;
+
+		levelSelect.setBtnStyles();
+	},
+	next() {
+		levelSelect.page = Math.max(levelSelect.maxPage, levelSelect.page + 1);
+		if (levelSelect.page == levelSelect.maxPage) document.querySelector('#lvlnext').style.opacity = 0.5;
+		else document.querySelector('#lvlnext').style.opacity = 1;
+
+		document.querySelector('#lvlprev').style.opacity = 1;
+
+		levelSelect.setBtnStyles();
+	},
+	open() {
+		document.querySelector('#levelselectdiv').style.display = "flex";
+		levelSelect.setBtnStyles();
+	},
+	close() {
+		document.querySelector('#levelselectdiv').style.display = "none";
+	}
+}
+
+if (typeof localStorage.getItem("frostjam-consequencesave-scarlet") == "string") levelSelect.maxLvl = Number(atob(localStorage.getItem("frostjam-consequencesave-scarlet")))

@@ -6,7 +6,7 @@ window.addEventListener("keydown", e => {
 		case "d": controls.d(); break
 		case "w": controls.w(); break
 		case "s": controls.s(); break
-		case "n": if (map.level == 18) newSequence(); break
+		case "n": if (map.level == 19) newSequence(); break
 		case "R": map.new(); cont(); break
 	}
 })

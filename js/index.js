@@ -50,8 +50,10 @@ function loop() {
 	let p = player.rect;
 	if (p.isColliding(map.exit) && !player.newLevelAnim) {
 		levelAnim.display = "block";
-		setTimeout(() => levelAnim.opacity = 1, 10);
+		setTimeout(() => levelAnim.opacity = 1, 30);
 		player.newLevelAnim = true;
+		levelSelect.maxLvl = Math.max(levelSelect.maxLvl, map.level + 1);
+		localStorage.setItem("frostjam-consequencesave-scarlet", btoa(levelSelect.maxLvl.toString()));
 		setTimeout(() => {
 			map.level++;
 			map.new();
@@ -88,6 +90,10 @@ function loop() {
 				map.sequenceTime++;
 				map.sequenceTCounter = 0;
 			}
+			if (map.sequenceTime > map.sequenceTimeLim && map.sequenceTimeLim) {
+				player.deathTimer = 10;
+			}
+			if (map.sequenceTimeLim) document.querySelector('#sequenceTime').innerText = "Time: " + map.sequenceTime.toFixed(1) + "/" + map.sequenceTimeLim.toFixed(1);
 		}
 	}
 	drawAll();
@@ -96,9 +102,19 @@ function loop() {
 let interval;
 function start() {
 	map.new();
-	setInterval(loop, 20);
+	interval = setInterval(loop, 20);
+	settings.paused = false;
 	document.querySelector("#startdiv").style.display = "none";
+	document.querySelector('#levelselectdiv').style.display = "none";
 	document.querySelector("#gamediv").style.display = "block";
+}
+function end() {
+	clearInterval(interval);
+	document.querySelector("#gamediv").style.display = "none";
+	document.querySelector("#startdiv").style.display = "flex";
+	document.querySelector('#optionsmodal').style.display = "none";
+	document.querySelector('#modal-bg').style.display = "none";
+	document.querySelector('#controlsdiv').style.display = "none";
 }
 
 function newSequence(c = true) {

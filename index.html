@@ -64,10 +64,14 @@
 			font-size: 20px;
 		}
 
-		.startBtn {
+		button {
+			font-size: 20px;
 			color: #8ff;
 			background: #013;
 			border: 2px solid;
+		}
+
+		.startBtn {
 			width: 250px;
 			height: 70px;
 			font-size: 30px;
@@ -75,24 +79,17 @@
 		}
 
 		.smallBtn {
-			color: #8ff;
-			background: #013;
 			border: 1px solid;
 			border-radius: 5px;
 			width: 100px;
 			height: 40px;
-			font-size: 20px;
 			margin: 5px
 		}
 
 		.controlBtn {
-			color:  #8ff;
-			background: #013;
-			border: 2px solid;
 			border-radius: 3px;
 			width: 70px;
 			height: 55px;
-			font-size: 20px;
 			margin: 3px;
 		}
 		.controlBtn.active {
@@ -100,6 +97,11 @@
 			background: #8ff;
 			text-shadow: 0 0 5px #013;
 			border-color: #8ff;
+		}
+		.lvlbtn {
+			margin: 2px;
+			width: 60px;
+			height: 60px;
 		}
 
 		* {
@@ -118,8 +120,35 @@
 	display: flex; flex-direction: column;
 	justify-content: center; align-items: center;" id="startdiv">
 		<h2 style="color: #8ff">Timelapse and Sequence</h2>
-		<button onclick="start()" class="startBtn">Play</button>
+		<button onclick="levelSelect.open()" class="startBtn">Play</button>
 		<button onclick="openControls()" class="startBtn">Controls</button>
+	</div>
+	<div style="position: absolute;
+	width: 100%; height: 100%;
+	display: none; flex-direction: column;
+	justify-content: center; align-items: center; z-index: 3;
+	background-color: #013;" id="levelselectdiv">
+		<div style="margin-bottom: 50px;">
+			<div style="display: flex;">
+				<button class="lvlbtn" id="lvl1" onclick="levelSelect.select(1)"></button>
+				<button class="lvlbtn" id="lvl2" onclick="levelSelect.select(2)"></button>
+				<button class="lvlbtn" id="lvl3" onclick="levelSelect.select(3)"></button>
+				<button class="lvlbtn" id="lvl4" onclick="levelSelect.select(4)"></button>
+				<button class="lvlbtn" id="lvl5" onclick="levelSelect.select(5)"></button>
+			</div>
+			<div style="display: flex;">
+				<button class="lvlbtn" id="lvl6" onclick="levelSelect.select(6)"></button>
+				<button class="lvlbtn" id="lvl7" onclick="levelSelect.select(7)"></button>
+				<button class="lvlbtn" id="lvl8" onclick="levelSelect.select(8)"></button>
+				<button class="lvlbtn" id="lvl9" onclick="levelSelect.select(9)"></button>
+				<button class="lvlbtn" id="lvl10" onclick="levelSelect.select(10)"></button>
+			</div>
+		</div>
+		<div>
+			<button style="height: 40px; width: 80px; margin: 10px; opacity: 0.5" id="lvlprev" onclick="levelSelect.prev()"><</button>
+			<button style="height: 40px; width: 80px; margin: 10px;" id="lvlnext" onclick="levelSelect.next()">></button>
+		</div>
+		<button style="position: absolute; top: 5px; left: 5px;" class="startBtn" onclick="levelSelect.close()">Back</button>
 	</div>
 	<div style="position: absolute;
 	width: 100%; height: 100%;
@@ -147,15 +176,17 @@
 				<button class="controlBtn" style="visibility: hidden;">.</button>
 			</div>
 			<div style="display: flex">
-			<button class="controlBtn" id="control-a">A</button>
-			<button class="controlBtn" id="control-s">S</button>
-			<button class="controlBtn" id="control-d">D</button>
+				<button class="controlBtn" id="control-a">A</button>
+				<button class="controlBtn" id="control-s">S</button>
+				<button class="controlBtn" id="control-d">D</button>
 			</div>
 		</div>
 		<canvas id="c" style="position: absolute;"></canvas>
 		<div id="sidediv">
 			<div id="sequencediv" style="display: none">
 				<span id="sequencetext">Sequences: 0 out of 0</span>
+				<br>
+				<span id="sequenceTime" style="display: none">Time: 0/0</span>
 			</div>
 			<div id="modifierdiv" style="display: none">
 				<span id="modifiertext">
@@ -166,8 +197,9 @@
 		<div id="optionsmodal" style="display: none">
 			<h3>Paused</h3>
 			<button class="startBtn" onclick="cont()">Continue</button>
-			<button class="startBtn" onclick="openControls()">Controls</button>
 			<button class="startBtn" onclick="map.new(); cont();">Reset Level</button>
+			<button class="startBtn" onclick="end();">Main Menu</button>
+			<button class="startBtn" onclick="openControls()">Controls</button>
 		</div>
 		<div id="modal-bg" style="display: none">
 		</div>

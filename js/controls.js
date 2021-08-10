@@ -6,8 +6,9 @@ window.addEventListener("keydown", e => {
 		case "d": controls.d(); break
 		case "w": controls.w(); break
 		case "s": controls.s(); break
-		case "n": if (map.level == 19) newSequence(); break
+		case "n": if (map.level == 22) newSequence(); break
 		case "R": map.new(); cont(); break
+		case "escape": if (settings.playing) {if (settings.paused) cont(); else pause();}
 	}
 })
 
@@ -32,12 +33,10 @@ let controls = {
 	dBtn: document.querySelector('#control-d'),
 	a() {
 		controls.backward = 1;
-		player.dir = "l";
 		controls.aBtn.className = "controlBtn active";
 	},
 	d() {
 		controls.forward = 1;
-		player.dir = "r";
 		controls.dBtn.className = "controlBtn active";
 	},
 	w() {

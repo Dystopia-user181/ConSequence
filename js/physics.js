@@ -10,8 +10,8 @@ player.move = function() {
 	moveBlocksX();
 	moveBlocksX();
 	if (map.isCollMap(p, map.death)) player.tmpDead = 'x';
-	if (controls.forward) player.velX += 3;
-	else if (controls.backward) player.velX -= 3;
+	if (controls.forward) {player.velX += 3; player.dir = 'r'}
+	else if (controls.backward) {player.velX -= 3; player.dir = 'l'}
 
 	let ySign = Math.sign(player.velY);
 	let canJump = false;

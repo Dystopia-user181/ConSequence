@@ -10,6 +10,13 @@
 	<script src="js/canvas.js" defer></script>
 	<title>Game jam thing</title>
 	<style>
+		.nerf {
+			color: #f54;
+			text-shadow: 0 0 5px #f54;
+		}
+		.nerf > * {
+			text-shadow: 0 0 5px #f54;
+		}
 		#startdiv {
 			position: absolute;
 			width: 100%;
@@ -79,7 +86,7 @@
 		}
 
 		.smallBtn {
-			border: 1px solid;
+			border: 2px solid;
 			border-radius: 5px;
 			width: 100px;
 			height: 40px;
@@ -157,7 +164,8 @@
 		<h2 style="color: #8ff">Controls</h2>
 		<p style="color: #8ff">
 			wasd: movement<br><br>
-			shift+r: reset level
+			shift+r: reset level<br><br>
+			esc: pause/unpause
 		</p>
 		<button onclick="closeControls()" class="startBtn">Back</button>
 	</div>
@@ -166,7 +174,7 @@
 	top: 0; left: 0; z-index: 1000; background-color: #0ab;
 	opacity: 0; transition: opacity 2s"></div>
 	<div style="display: none" id="gamediv">
-		<button class="smallBtn" onclick="pause()" style="position: absolute; z-index: 1">Options</button>
+		<button class="smallBtn" onclick="pause()" style="position: absolute; z-index: 1">Pause</button>
 		<div id="mobile-c" style="position: absolute; z-index: 2; left: 5px; bottom: 5px;">
 			<button class="controlBtn" style="width: 146px" onclick="map.new()">Reset Level</button>
 			<br>

@@ -1,7 +1,13 @@
 let modifiers = {
 	jump: {
 		active: false,
-		desc: "Jump Boost: jump higher when near your parallel selves"
+		title: "Jump boost",
+		desc: "jump higher when nearer your parallel selves"
+	},
+	unstable: {
+		title: "Instability",
+		desc: "all sequences after the first sequence last only 60s",
+		nerf: true
 	}
 }
 
@@ -18,9 +24,14 @@ function updateModifierHUD() {
 	}
 	let str = "<h3 style='font-size: 30px'>Modifiers</h3>";
 	for (let i in player.modifiers) {
-		str += modifiers[i].desc;
+		if (!player.modifiers[i]) continue;
+		if (modifiers[i].nerf) str += "<span class='nerf'>";
+		str += "<span style='font-size: 25px;'>" + modifiers[i].title
 		if (player.modifiers[i] > 1) str += " (x" + player.modifiers[i] + ")";
-		str += "<br>";
+		str += "</span><br>"
+		str +=  "<span style='font-size: 15px;'>" + modifiers[i].desc + "</span>";
+		if (modifiers[i].nerf) str += "</span>";
+		str += "<br><br>";
 	}
 	document.querySelector("#modifiertext").innerHTML = str;
 }

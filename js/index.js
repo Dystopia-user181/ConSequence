@@ -26,12 +26,14 @@ let player = {
 	sequence: [],
 	modifiers: {
 		jump: 0,
+		unstable: 0
 	},
 	collWBlock: false,
 	dir: "r"
 }
 let settings = {
 	paused: false,
+	playing: false
 }
 function pause() {
 	settings.paused = true;
@@ -93,7 +95,7 @@ function loop() {
 			if (map.sequenceTime > map.sequenceTimeLim && map.sequenceTimeLim) {
 				player.deathTimer = 10;
 			}
-			if (map.sequenceTimeLim) document.querySelector('#sequenceTime').innerText = "Time: " + map.sequenceTime.toFixed(1) + "/" + map.sequenceTimeLim.toFixed(1);
+			if (map.sequenceTimeLim) document.querySelector('#sequenceTime').innerText = "Time: " + (map.sequenceTime/50).toFixed(1) + "/" + (map.sequenceTimeLim/50).toFixed(1);
 		}
 	}
 	drawAll();
@@ -103,12 +105,14 @@ let interval;
 function start() {
 	map.new();
 	interval = setInterval(loop, 20);
+	settings.playing = true;
 	settings.paused = false;
 	document.querySelector("#startdiv").style.display = "none";
 	document.querySelector('#levelselectdiv').style.display = "none";
 	document.querySelector("#gamediv").style.display = "block";
 }
 function end() {
+	settings.playing = false;
 	clearInterval(interval);
 	document.querySelector("#gamediv").style.display = "none";
 	document.querySelector("#startdiv").style.display = "flex";
@@ -140,4 +144,8 @@ function newSequence(c = true) {
 	map.blocks = map.blocks.filter(_=> !_.meta.logPos);
 	if (map.sequences > map.sequenceLimit) map.new();
 	document.querySelector("#sequencetext").innerText = "Sequences: " + map.sequences + " out of " + map.sequenceLimit;
+	if (player.modifiers.unstable && map.sequences > 1) {
+		map.sequenceTimeLim = 3000;
+	}
+	document.querySelector('#sequenceTime').style.display = map.sequenceTimeLim ? "inline" : "none";
 }

@@ -5,6 +5,7 @@ let map = {
 	},
 	mapRect(x, y, w, h) {
 		map.map.push(new Rect(x, y, w, h, {type: "map"}));
+		return map.map[map.map.length - 1];
 	},
 	deathBody() {
 		let p = player.rect;
@@ -136,8 +137,8 @@ let map = {
 		map.mapRect(-400, -1225, 25, 750);
 		map.mapRect(-200, -1225, 25, 650);
 		for (let i = 0; i < 2; i++) {
-			map.mapRect(-400, -650 - i*300, 27, 25);
-			map.mapRect(-202, -800 - i*300, 27, 25);
+			map.mapRect(-400, -650 - i*300, 30, 25);
+			map.mapRect(-205, -800 - i*300, 30, 25);
 		}
 		map.mapRect(-230, -1240, 500, 25);
 		map.exit = new Rect(200, -1280, 20, 40);
@@ -227,7 +228,8 @@ let map = {
 			ctx.shadowColor = '#fff';
 			ctx.font = '30px monospace';
 			ctx.textAlign = 'left';
-			ctx.fillText("In a broken landscape.", cam.getX(0), cam.getY(-100));};
+			ctx.fillText("In a broken landscape.", cam.getX(0), cam.getY(-100));
+		};
 		map.customTop = ()=>{};
 	},
 	level4() {
@@ -708,6 +710,210 @@ let map = {
 		map.customTop = () => {};
 	},
 	level19() {
+		function spike(x, y) {
+			map.mapRect(x, y, 50, 401);
+			map.mapRect(x - 100, y, 110, 25);
+			map.mapRect(x - 100, y + 100, 110, 25);
+			map.mapRect(x - 100, y + 200, 110, 25);
+			map.mapRect(x - 100, y + 300, 110, 25);
+		}
+		map.sequenceLimit = 2;
+		map.sequenceTimeLim = 0;
+		camera.zoom = 0.7;
+		player.modifiers.unstable = 1;
+		map.mapRect(-100, 100, 2700, 50);
+		map.mapRect(-100, 300, 3000, 50);
+		map.mapRect(-100, -100, 1550, 50);
+		map.mapRect(100, -300, 1550, 50);
+		map.mapRect(-100, -650, 50, 1000);
+		map.deathRect(1600, -300, 50, 300);
+		map.mapRect(1650, -300, 650, 50);
+		map.mapRect(1500, -25, 150, 25);
+		map.mapRect(-100, -200, 100, 25);
+
+		for (let i = 0; i < 7; i++) {
+			map.mapRect(120 + i*190, -220, 150, 150);
+			map.mapRect(120 + i*190, 180, 150, 150);
+		}
+
+		spike(300, -700);
+		spike(900, -700);
+		spike(1500, -700);
+		map.mapRect(2550, -580, 50, 700);
+		map.mapRect(2850, -1000, 50, 1350);
+
+		let button = map.button(2100, 90, 100, 10);
+		let door = map.door(1450, -250, 50, 320);
+		let door2 = map.door(1600, 0, 50, 100);
+		door2.isOpen = true;
+
+		map.bodyRect(2300, -600, 50, 700);
+		let button2 = map.button(2420, 90, 100, 10);
+		let door3 = map.door(2300, 150, 50, 100, 60);
+		map.mapRect(2250, 250, 150, 100);
+
+		map.exit = new Rect(0, 260, 20, 40);
+		map.custom = () => {
+			button.query();
+			button2.query();
+			door.isOpen = button.isPressed;
+			door.query();
+			door2.isOpen = door2.isOpen && !button.isPressed;
+			door2.query();
+			door3.isOpen = button2.isPressed;
+			door3.query();
+		};
+		map.customBottom = () => {
+			button.draw();
+			button2.draw();
+		};
+		map.customTop = () => {};
+	},
+	level20() {
+		map.sequenceLimit = 3;
+		map.sequenceTimeLim = 0;
+		camera.zoom = 0.7;
+		player.modifiers.unstable = 1;
+
+		map.mapRect(-600, 100, 2000, 25);
+		map.mapRect(-600, 300, 2200, 25);
+		map.mapRect(-600, -100, 600, 25);
+		map.mapRect(200, -100, 1100, 25);
+		map.mapRect(-600, -100, 25, 425);
+		map.mapRect(975, -100, 25, 225);
+
+		for (let i = 0; i < 4; i++) {
+			map.mapRect(-300 + i*80, -90, 10, 160);
+			map.mapRect(-340 + i*80, -45, 10, 170);
+		}
+		map.mapRect(-420, -45, 90, 10);
+		map.mapRect(-460, -80, 10, 145);
+		map.mapRect(-459, 35, 88, 10);
+		map.mapRect(-420, -45, 10, 50);
+		map.mapRect(-380, -5, 10, 75);
+		map.mapRect(-420, 75, 10, 50);
+		map.mapRect(-500, -45, 10, 170);
+		let jumpBoost = map.boost(-557.5, 40, "jump");
+
+		map.deathRect(190, -100, 10, 170);
+		for (let i = 0; i < 6; i++) {
+			map.mapRect(200 + i*80, -90, 10, 160);
+			map.mapRect(240 + i*80, -45, 10, 170);
+
+			map.mapRect(200 + i*80, 110, 10, 160);
+			map.mapRect(240 + i*80, 155, 10, 170);
+		}
+		let button1 = map.button(700, 90, 100, 10);
+		let door1 = map.door(740, 125, 20, 175);
+		let button2 = map.button(850, 90, 100, 10);
+		let door2 = map.door(890, 125, 20, 175);
+
+		map.mapRect(190, -1150, 20, 1051);
+		let mapRect1 = map.mapRect(-10, -350, 120, 20);
+		for (let i = 0; i < 7; i++) {
+			map.mapRect(-10, -450 - i*100, 120, 20);
+		}
+
+		map.mapRect(-20, -11350, 20, 11251);
+		map.mapRect(400, -11350, 20, 11100);
+		map.mapRect(400, -720, 1000, 20);
+
+		let button3 = map.button(500, -110, 100, 10);
+		let door3 = map.door(1100, -700, 20, 600);
+		let button4 = map.button(650, -110, 100, 10);
+		let door4 = map.door(1200, -700, 20, 600);
+
+		map.bodyRect(1300, 125, 300, 175);
+
+		map.mapRect(1330, -1000, 25, 960);
+		map.mapRect(1030, -45, 440, 5);
+		map.mapRect(1035, -45, 5, 115);
+		map.mapRect(999, -5, 6, 5);
+		map.mapRect(1030, 35, 6, 5);
+		map.mapRect(999, 70, 6, 5);
+		map.mapRect(1070, -5, 5, 116);
+		map.mapRect(1105, -45, 5, 115);
+		map.mapRect(1140, -5, 5, 116);
+		map.mapRect(1175, -45, 5, 115);
+		map.mapRect(1210, -5, 5, 115);
+		map.mapRect(1250, -45, 5, 115);
+		map.mapRect(1214, -5, 6, 5);
+		map.mapRect(1245, 35, 6, 5);
+		map.mapRect(1214, 70, 6, 5);
+		map.mapRect(1285, -5, 5, 115);
+		map.mapRect(1320, -45, 5, 45);
+		map.mapRect(1355, -5, 5, 40);
+		map.mapRect(1289, 30, 67, 5);
+		map.mapRect(1390, -45, 5, 115);
+		map.mapRect(1320, 65, 72, 5);
+
+		map.exit = new Rect(-10, 260, 20, 40);
+		map.custom = () => {
+			button1.query();
+			button2.query();
+			button3.query();
+			button4.query();
+			jumpBoost.query();
+			door1.isOpen = button1.isPressed;
+			door1.query();
+			door2.isOpen = button2.isPressed;
+			door2.query();
+			door3.isOpen = button3.isPressed;
+			door3.query();
+			door4.isOpen = button4.isPressed;
+			door4.query();
+			if (player.rect.pos.y <= -380) mapRect1.width = 210;
+			else mapRect1.width = 120;
+		};
+		map.customBottom = () => {
+			button1.draw();
+			button2.draw();
+			button3.draw();
+			button4.draw();
+			jumpBoost.draw();
+
+			ctx.fillStyle = '#fff';
+			ctx.shadowBlur = 15;
+			ctx.shadowColor = '#fff';
+			ctx.font = '30px monospace';
+			ctx.textAlign = 'center';
+			ctx.fillText("Patience.", cam.getX(812.5), cam.getY(0));
+		};
+		map.customTop = () => {};
+	},
+	level21() {
+		map.sequenceLimit = 3;
+		map.sequenceTimeLim = 0;
+		camera.zoom = 0.7;
+		map.mapRect(-100, 100, 200, 25);
+		map.deathRect(-125, -490, 25, 915);
+		map.mapRect(-100, 400, 601, 25);
+		map.bodyRect(100, -500, 75, 900);
+		map.mapRect(200, -475, 300, 50);
+		map.mapRect(250, -550, 150, 40);
+		map.mapRect(300, -600, 100, 60);
+		map.mapRect(-125, -600, 225, 110);
+		map.bodyRect(0, -625, 50, 25);
+
+		map.mapRect(450, -2000, 50, 1550);
+		let button1 = map.button(-50, 390, 100, 10);
+		let door1 = map.door(400, -900, 50, 425);
+		map.mapRect(375, -950, 80, 50);
+
+		map.mapRect(500, -350, 200, 775);
+		map.bodyRect(300, -1400, 75, 800);
+		map.exit = new Rect(590, -390, 20, 40);
+		map.custom = () => {
+			button1.query();
+			door1.isOpen = button1.isPressed;
+			door1.query();
+		};
+		map.customBottom = () => {
+			button1.draw();
+		};
+		map.customTop = () => {};
+	},
+	level22() {
 		map.sequenceLimit = 1e15;
 		map.sequenceTimeLim = 0;
 		camera.zoom = 0.5;
@@ -730,14 +936,14 @@ let map = {
 			ctx.fillText("Press N to create a new sequence and cause chaos", cam.getX(0), cam.getY(-200));
 		};
 	},
-	level: 5,
+	level: 1,
 	custom() {},
 	customBottom() {},
 	customTop() {},
 }
 let levelSelect = {
 	page: 0,
-	maxPage: 1,
+	maxPage: 2,
 	maxLvl: 1,
 	select(btnId) {
 		if (levelSelect.page*10 + btnId > levelSelect.maxLvl) return;
@@ -766,7 +972,7 @@ let levelSelect = {
 		levelSelect.setBtnStyles();
 	},
 	next() {
-		levelSelect.page = Math.max(levelSelect.maxPage, levelSelect.page + 1);
+		levelSelect.page = Math.min(levelSelect.maxPage, levelSelect.page + 1);
 		if (levelSelect.page == levelSelect.maxPage) document.querySelector('#lvlnext').style.opacity = 0.5;
 		else document.querySelector('#lvlnext').style.opacity = 1;
 
@@ -783,4 +989,9 @@ let levelSelect = {
 	}
 }
 
-if (typeof localStorage.getItem("frostjam-consequencesave-scarlet") == "string") levelSelect.maxLvl = Number(atob(localStorage.getItem("frostjam-consequencesave-scarlet")))
+if (typeof localStorage.getItem("frostjam-consequencesave-scarlet") == "string") {
+	levelSelect.maxLvl = Number(atob(localStorage.getItem("frostjam-consequencesave-scarlet")));
+	levelSelect.page = Math.floor(levelSelect.maxLvl/10 - 0.1);
+	levelSelect.prev();
+	levelSelect.next();
+}

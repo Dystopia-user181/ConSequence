@@ -1,0 +1,110 @@
+.nerf {
+	color: #f54;
+	text-shadow: 0 0 5px #f54;
+}
+.nerf > * {
+	text-shadow: 0 0 5px #f54;
+}
+#startdiv {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#gamediv {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+#optionsmodal {
+	position: absolute;
+	z-index: 500;
+	color: #8ff;
+	border: 2px solid;
+	top: 50%;
+	left: 50%;
+	background-color: #013;
+	padding: 10px;
+	text-align: center;
+	width: 500px;
+	transform: translate(-50%, -50%);
+	box-shadow: 0 0 5px 1px #8ff;
+}
+#modal-bg {
+	position: absolute;
+	z-index: 100;
+	background-color: #013a;
+	height: 100%;
+	width: 100%;
+}
+
+#sidediv {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+#sequencediv, #modifierdiv {
+	padding: 3px;
+	color: #8ff;
+	background-color: #0138;
+}
+#modifierdiv {
+	padding-top: 10px;
+	font-size: 20px;
+}
+
+button {
+	font-size: 20px;
+	color: #8ff;
+	background: #013;
+	border: 2px solid;
+}
+
+.startBtn {
+	width: 250px;
+	height: 70px;
+	font-size: 30px;
+	margin: 5px
+}
+
+.smallBtn {
+	border: 2px solid;
+	border-radius: 5px;
+	width: 100px;
+	height: 40px;
+	margin: 5px
+}
+
+.controlBtn {
+	border-radius: 3px;
+	width: 100px;
+	height: 70px;
+	margin: 3px;
+	font-size: 24px;
+}
+.controlBtn.active {
+	color: #013;
+	background: #8ff;
+	text-shadow: 0 0 5px #013;
+	border-color: #8ff;
+}
+.lvlbtn {
+	margin: 2px;
+	width: 60px;
+	height: 60px;
+}
+
+* {
+	font-family: monospace;
+	font-weight: 100;
+	user-select: none;
+	touch-action: manipulation;
+	text-shadow: 0 0 5px #8ff;
+	outline: none;
+}

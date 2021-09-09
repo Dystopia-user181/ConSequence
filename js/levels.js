@@ -258,8 +258,8 @@ let map = {
 		map.mapRect(1100, -65, 200, 25);
 		map.deathRect(1000, -265, 25, 200);
 		map.mapRect(500, -265, 500, 25);
-		map.deathRect(-200, -465, 600, 50);
-		map.exit = new Rect(-110, -505, 20, 40);
+		map.deathRect(-200, -415, 600, 50);
+		map.exit = new Rect(-110, -455, 20, 40);
 		map.custom = ()=>{};
 		map.customBottom = ()=>{
 			ctx.fillStyle = '#fff';
@@ -359,6 +359,23 @@ let map = {
 		camera.zoom = 0.8;
 		map.sequenceLimit = 2;
 		map.sequenceTimeLim = 0;
+		map.mapRect(-400, 100, 500, 50);
+		map.mapRect(-400, -500, 500, 50);
+		map.mapRect(-400, -500, 50, 650);
+		map.deathRect(75, -500, 25, 650);
+		map.mapRect(-200, -300, 50, 250);
+		map.mapRect(-200, -100, 300, 50);
+		map.mapRect(-200, -300, 300, 50);
+		map.bodyRect(-250, -450, 50, 550);
+		map.exit = new Rect(-72.5, -340, 20, 40);
+		map.custom = () => {};
+		map.customBottom = () => {};
+		map.customTop = () => {};
+	},
+	level10() {
+		camera.zoom = 0.8;
+		map.sequenceLimit = 2;
+		map.sequenceTimeLim = 0;
 		map.mapRect(-300, 100, 1100, 50);
 		map.bodyRect(100, -100, 50, 80);
 		map.mapRect(700, -100, 300, 250);
@@ -384,7 +401,7 @@ let map = {
 		};
 		map.customTop = ()=>{};
 	},
-	level10() {
+	level11() {
 		camera.zoom = 1
 		map.sequenceLimit = 2;
 		map.sequenceTimeLim = 0;
@@ -415,7 +432,7 @@ let map = {
 		};
 		map.customTop = ()=>{};
 	},
-	level11() {
+	level12() {
 		camera.zoom = 0.7
 		map.sequenceLimit = 3;
 		map.sequenceTimeLim = 0;
@@ -452,7 +469,7 @@ let map = {
 		};
 		map.customTop = ()=>{};
 	},
-	level12() {
+	level13() {
 		camera.zoom = 0.7;
 		map.sequenceLimit = 3;
 		map.sequenceTimeLim = 0;
@@ -476,7 +493,7 @@ let map = {
 		map.deathRect(-110, 100, 10, 200);
 		map.mapRect(-700, 300, 600, 50);
 		map.mapRect(-650, 200, 150, 75);
-		map.bodyRect(-450, 275, 290, 25);
+		map.bodyRect(-450, 275, 275, 25);
 		map.mapRect(-450, 90, 25, 150);
 		let button2 = map.button(-625, 290, 100, 10);
 		let door2 = map.door(-600, 90, 25, 110, 10);
@@ -509,7 +526,7 @@ let map = {
 			button2.draw();
 		};
 	},
-	level13() {
+	level14() {
 		camera.zoom = 1;
 		map.sequenceLimit = 2;
 		map.sequenceTimeLim = 0;
@@ -525,7 +542,7 @@ let map = {
 		};
 		map.customTop = () => {};
 	},
-	level14() {
+	level15() {
 		camera.zoom = 1;
 		map.sequenceLimit = 2;
 		map.sequenceTimeLim = 0;
@@ -544,7 +561,7 @@ let map = {
 		};
 		map.customTop = () => {};
 	},
-	level15() {
+	level16() {
 		camera.zoom = 0.6;
 		map.sequenceLimit = 3;
 		map.sequenceTimeLim = 0;
@@ -599,23 +616,6 @@ let map = {
 		map.customTop = () => {
 			button2.draw();
 		};
-	},
-	level16() {
-		camera.zoom = 0.8;
-		map.sequenceLimit = 2;
-		map.sequenceTimeLim = 0;
-		map.mapRect(-400, 100, 500, 50);
-		map.mapRect(-400, -500, 500, 50);
-		map.mapRect(-400, -500, 50, 650);
-		map.deathRect(75, -500, 25, 650);
-		map.mapRect(-200, -300, 50, 250);
-		map.mapRect(-200, -100, 300, 50);
-		map.mapRect(-200, -300, 300, 50);
-		map.bodyRect(-250, -450, 50, 550);
-		map.exit = new Rect(-72.5, -340, 20, 40);
-		map.custom = () => {};
-		map.customBottom = () => {};
-		map.customTop = () => {};
 	},
 	level17() {
 		camera.zoom = 0.8;
@@ -992,6 +992,10 @@ let levelSelect = {
 if (typeof localStorage.getItem("frostjam-consequencesave-scarlet") == "string") {
 	levelSelect.maxLvl = Number(atob(localStorage.getItem("frostjam-consequencesave-scarlet")));
 	levelSelect.page = Math.floor(levelSelect.maxLvl/10 - 0.1);
-	levelSelect.prev();
-	levelSelect.next();
+	if (levelSelect.page == 0) document.querySelector('#lvlprev').style.opacity = 0.5;
+	else document.querySelector('#lvlprev').style.opacity = 1;
+
+
+	if (levelSelect.page == levelSelect.maxPage) document.querySelector('#lvlnext').style.opacity = 0.5;
+	else document.querySelector('#lvlnext').style.opacity = 1;
 }

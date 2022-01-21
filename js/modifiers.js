@@ -1,13 +1,14 @@
 let modifiers = {
 	jump: {
 		active: false,
-		title: "Jump boost",
-		desc: "jump higher when nearer your parallel selves"
+		title: "Jump Boost",
+		desc: "Jump higher when nearer your parallel selves"
 	},
-	unstable: {
-		title: "Instability",
-		desc: "all sequences after the first sequence last only 60s",
-		nerf: true
+	gravity: {
+		title: "Gravitate",
+		desc: "Gravity is stronger at all times",
+		nerf: true,
+		nullify: true
 	}
 }
 
@@ -34,4 +35,29 @@ function updateModifierHUD() {
 		str += "<br><br>";
 	}
 	document.querySelector("#modifiertext").innerHTML = str;
+}
+
+class Boost {
+	constructor (x, y, type) {
+		this.hitbox = new Rect(x, y, 40, 40);
+		this.type = type;
+		this.hasPicked = false;
+		this.x = x;
+		this.y = y;
+	}
+	
+	query() {
+		if (!this.hasPicked && player.rect.isColliding(this.hitbox)) {
+			if (modifiers[this.type].nullify)
+				player.modifiers[this.type] = 0;
+			else
+				player.modifiers[this.type]++;
+
+			this.hasPicked = true;
+			updateModifierHUD();
+		}
+	}
+	draw() {
+		if (!this.hasPicked) modifiers[this.type].draw(this.x, this.y + Math.sin(map.sequenceTime/7)*7);
+	}
 }

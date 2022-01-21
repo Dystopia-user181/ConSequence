@@ -2,12 +2,18 @@ window.addEventListener("keydown", e => {
 	let key = e.key;
 	if (key.toLowerCase() != "r") key = key.toLowerCase();
 	switch (key) {
-		case "a": controls.a(); break
-		case "d": controls.d(); break
-		case "w": controls.w(); break
-		case "s": controls.s(); break
-		case "n": if (map.level == 22) newSequence(); break
-		case "R": map.new(); cont(); break
+		case "a": case "arrowleft":
+			controls.a(); break;
+		case "d": case "arrowright":
+			controls.d(); break;
+		case "w": case "arrowup":
+			controls.w(); break;
+		case "s": case "arrowdown":
+			controls.s(); break;
+		case "R":
+			map.new();
+			cont();
+			break;
 		case "escape": if (settings.playing) {if (settings.paused) cont(); else pause();}
 	}
 })
@@ -15,10 +21,10 @@ window.addEventListener("keydown", e => {
 window.addEventListener("keyup", e => {
 	let key = e.key.toLowerCase();
 	switch (key) {
-		case "a": controls.aNo(); break
-		case "d": controls.dNo(); break
-		case "w": controls.wNo(); break
-		case "s": controls.sNo(); break
+		case "a": case "arrowleft": controls.aNo(); break
+		case "d": case "arrowright": controls.dNo(); break
+		case "w": case "arrowup": controls.wNo(); break
+		case "s": case "arrowdown": controls.sNo(); break
 	}
 })
 

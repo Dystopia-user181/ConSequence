@@ -3,7 +3,13 @@ let ctx = c.getContext("2d");
 
 let camera = {
 	pos: {x: 0, y: 0},
-	zoom: 1,
+	get zoom() {
+		return cam.realZoom*window.innerWidth/1536;
+	},
+	set zoom(x) {
+		cam.realZoom = x;
+	},
+	realZoom: 1,
 	getX(x) {
 		return (x - camera.pos.x)*camera.zoom + c.width/2
 	},
@@ -52,6 +58,30 @@ modifiers.jump.draw = function(x, y, size = 40) {
 	ctx.lineTo(x + cam.pZ(size), y + cam.pZ(size/2));
 	ctx.lineTo(x + cam.pZ(size/2), y);
 	ctx.fill();
+}
+modifiers.gravity.draw = function(x, y, size = 40) {
+	x = cam.getX(x);
+	y = cam.getY(y);
+	s = cam.pZ(size);
+	ctx.strokeStyle = '#3bf';
+	ctx.shadowBlur = 15;
+	ctx.lineWidth = size/8;
+	ctx.shadowColor = '#3bf';
+	ctx.beginPath();
+	ctx.moveTo(x + s/2, y);
+	ctx.lineTo(x + s/2, y + s*0.92);
+	ctx.moveTo(x + s/4, y + 5*s/6);
+	ctx.lineTo(x + s/2, y + s);
+	ctx.lineTo(x + s*0.75, y + 5*s/6);
+	ctx.stroke();
+	ctx.strokeStyle = '#f88';
+	ctx.shadowBlur = 0;
+	ctx.beginPath();
+	ctx.moveTo(x, y + s/6);
+	ctx.lineTo(x + s, y + 5*s/6);
+	ctx.moveTo(x + s, y + s/6);
+	ctx.lineTo(x, y + 5*s/6);
+	ctx.stroke();
 }
 
 function drawExit() {

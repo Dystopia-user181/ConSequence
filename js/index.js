@@ -26,7 +26,7 @@ let player = {
 	sequence: [],
 	modifiers: {
 		jump: 0,
-		unstable: 0
+		gravity: 0
 	},
 	collWBlock: false,
 	dir: "r"

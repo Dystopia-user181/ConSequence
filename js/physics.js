@@ -48,11 +48,11 @@ player.move = function() {
 	player.velX *= 0.7;
 	let isInside = p.isInsideGrp(map.simBSequence, 7);
 	if (!isInside) {
-		player.velY += 0.6;
+		player.velY += gravity();
 		if (controls.jump && canJump) {
-			player.velY = -15 * (Math.sqrt(player.modifiers.jump*modifiers.jump.active)*0.4 + 1);
+			player.velY = jumpheight();
 		} else if (controls.jump && player.collWBlock) {
-			player.velY = -15 * (Math.sqrt(player.modifiers.jump*modifiers.jump.active)*0.4 + 1);
+			player.velY = jumpheight();
 		}
 		player.velY *= 0.99;
 		c.style.filter = "invert(0)";
@@ -86,6 +86,18 @@ player.move = function() {
 	camera.pos.x = player.rect.pos.x + 15;
 	camera.pos.y = Math.min(player.rect.pos.y + 15, 3500);
 }
+
+function gravity() {
+	let base = 0.6;
+	base *= Math.sqrt(player.modifiers.gravity)*0.5 + 1;
+	return base;
+}
+function jumpheight() {
+	let base = -15*Math.sign(gravity());
+	base *= Math.sqrt(player.modifiers.jump*modifiers.jump.active)*0.4 + 1;
+	return base;
+}
+
 
 function moveBlocksX() {
 	let p = player.rect;

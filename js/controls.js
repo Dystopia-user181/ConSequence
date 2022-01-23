@@ -14,7 +14,7 @@ window.addEventListener("keydown", e => {
 			map.new();
 			cont();
 			break;
-		case "escape": if (settings.playing) {if (settings.paused) cont(); else pause();}
+		case "escape": if (settings.playing && !player.newLevelAnim) {if (settings.paused) cont(); else pause();}
 	}
 })
 

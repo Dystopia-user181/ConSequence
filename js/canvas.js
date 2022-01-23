@@ -65,7 +65,7 @@ modifiers.gravity.draw = function(x, y, size = 40) {
 	s = cam.pZ(size);
 	ctx.strokeStyle = '#3bf';
 	ctx.shadowBlur = 15;
-	ctx.lineWidth = size/8;
+	ctx.lineWidth = s/8;
 	ctx.shadowColor = '#3bf';
 	ctx.beginPath();
 	ctx.moveTo(x + s/2, y);

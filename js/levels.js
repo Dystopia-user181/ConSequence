@@ -71,7 +71,8 @@ let map = {
 	level6, level7, level8, level9, level10,
 	level11, level12, level13, level14, level15,
 	level16, level17, level18, level19, level20,
-	level21, level22, level23, level24,
+	level21, level22, level23, level24, level25,
+	level26, level27, level28,
 	level: 1,
 	custom() {},
 	customBottom() {},
@@ -152,22 +153,42 @@ class Door {
 		map.map.push(rect);
 		this.maxH = h;
 		this.minH = minH;
+		this.minX = x;
 		this.doorObj = rect;
 		this.isOpen = false;
 	}
 
 	query() {
+		const oProp = this.isHorizontal ? "width" : "height";
 		if (this.isOpen) {
-			this.doorObj.height = Math.max(this.doorObj.height - 1, this.minH);
+			this.doorObj[oProp] = Math.max(this.doorObj[oProp] - 1, this.minH);
+			if (this.isHorizontal == RIGHT)
+				this.doorObj.pos.x = Math.min(this.doorObj.pos.x + 1, this.minX + this.maxH - this.minH);
 		} else {
 			if (player.deathTimer) {
-				this.doorObj.height = this.maxH;
+				this.doorObj[oProp] = this.maxH;
 			}
-			this.doorObj.height = Math.min(this.doorObj.height + 1, this.maxH);
-			if (map.isCollMap(this.doorObj, [player.rect, ...map.blocks])) this.doorObj.height--;
+			this.doorObj[oProp] = Math.min(this.doorObj[oProp] + 1, this.maxH);
+			if (this.isHorizontal == RIGHT)
+				this.doorObj.pos.x = Math.max(this.doorObj.pos.x - 1, this.minX);
+			if (map.isCollMap(this.doorObj, [player.rect, ...map.blocks])) this.doorObj[oProp]--;
 		}
 	}
+
+	horizontal(leftright) {
+		this.maxH = this.doorObj.width;
+		this.isHorizontal = leftright;
+		return this;
+	}
+
+	open() {
+		this.isOpen = true;
+		this.doorObj[this.isHorizontal ? "width" : "height"] = this.minH;
+		if (this.isHorizontal == RIGHT) this.doorObj.pos.x = this.minX + this.maxH - this.minH;
+		return this;
+	}
 }
+let LEFT = 1, RIGHT = 2;
 
 class Button {
 	constructor(x, y, w, h) {

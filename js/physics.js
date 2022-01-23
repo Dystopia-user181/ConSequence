@@ -1,7 +1,13 @@
 player.move = function() {
 	if (player.deathTimer) return;
 	let p = player.rect;
-	p.pos.x += Math.round(player.velX)/(1+p.isInsideGrp(map.simBSequence, 7));
+
+	let accX = 3*(controls.forward - controls.backward);
+	player.velX += accX;
+	if (Math.sign(accX))
+		player.dir = accX < 0 ? 'l' : 'r';
+	player.velX *= 0.7;
+	p.pos.x += Math.round(player.velX)/(1 + p.isInsideGrp(map.simBSequence, 7));
 	if (p.fixPos(player.velX, "x")) player.velX = 0;
 	for (let i in map.blocks) {
 		let b = map.blocks[i];
@@ -10,14 +16,12 @@ player.move = function() {
 	moveBlocksX();
 	moveBlocksX();
 	if (map.isCollMap(p, map.death)) player.tmpDead = 'x';
-	if (controls.forward) {player.velX += 3; player.dir = 'r'}
-	else if (controls.backward) {player.velX -= 3; player.dir = 'l'}
 
 	let ySign = Math.sign(player.velY);
 	let canJump = false;
 	let isCollMap = false;
 	for (let i = 0; i < Math.floor(player.velY*ySign/10); i++) {
-		p.pos.y += 10*ySign/(1+p.isInsideGrp(map.simBSequence, 7));
+		p.pos.y += 10*ySign/(1 + p.isInsideGrp(map.simBSequence, 7));
 		if (p.fixPos(player.velY, "y")) {
 			canJump = player.velY >= 0 || canJump;
 			player.velY = 0;
@@ -45,7 +49,6 @@ player.move = function() {
 		modifiers.jump.active = false;
 	}
 
-	player.velX *= 0.7;
 	let isInside = p.isInsideGrp(map.simBSequence, 7);
 	if (!isInside) {
 		player.velY += gravity();
@@ -57,13 +60,12 @@ player.move = function() {
 		player.velY *= 0.99;
 		c.style.filter = "invert(0)";
 	} else {
-		if (controls.down) player.velY = 5;
-		else if (controls.jump) player.velY = -5;
-		else player.velY = 0;
+		player.velY = 5*(controls.down - controls.jump);
 
-		if (controls.backward) player.velX = -5;
-		else if (controls.forward) player.velX = 5;
-		else player.velX = 0;
+		let velX = 5*(controls.forward - controls.backward);
+		player.velX = velX;
+		if (Math.sign(velX))
+			player.dir = velX < 0 ? 'l' : 'r';
 
 		c.style.filter = "invert(1)";
 	}
@@ -89,7 +91,7 @@ player.move = function() {
 
 function gravity() {
 	let base = 0.6;
-	base *= Math.sqrt(player.modifiers.gravity)*0.5 + 1;
+	base *= player.modifiers.gravity*0.5 + 1;
 	return base;
 }
 function jumpheight() {

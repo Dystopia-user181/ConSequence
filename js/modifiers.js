@@ -17,7 +17,7 @@ function updateModifierHUD() {
 	for (let i in player.modifiers) {
 		modifierSum += player.modifiers[i];
 	}
-	if (modifierSum <= 0) {
+	if (modifierSum == 0) {
 		document.querySelector("#modifierdiv").style.display = "none";
 		return;
 	} else {
@@ -28,7 +28,7 @@ function updateModifierHUD() {
 		if (!player.modifiers[i]) continue;
 		if (modifiers[i].nerf) str += "<span class='nerf'>";
 		str += "<span style='font-size: 25px;'>" + modifiers[i].title
-		if (player.modifiers[i] > 1) str += " (x" + player.modifiers[i] + ")";
+		if (player.modifiers[i] != 0) str += " (" + player.modifiers[i] + "x)";
 		str += "</span><br>"
 		str +=  "<span style='font-size: 15px;'>" + modifiers[i].desc + "</span>";
 		if (modifiers[i].nerf) str += "</span>";
@@ -49,7 +49,7 @@ class Boost {
 	query() {
 		if (!this.hasPicked && player.rect.isColliding(this.hitbox)) {
 			if (modifiers[this.type].nullify)
-				player.modifiers[this.type] = 0;
+				player.modifiers[this.type]--;
 			else
 				player.modifiers[this.type]++;
 
@@ -58,6 +58,6 @@ class Boost {
 		}
 	}
 	draw() {
-		if (!this.hasPicked) modifiers[this.type].draw(this.x, this.y + Math.sin(map.sequenceTime/7)*7);
+		if (!this.hasPicked) modifiers[this.type].draw(this.x, this.y + Math.sin(map.sequenceTime/9)*5);
 	}
 }

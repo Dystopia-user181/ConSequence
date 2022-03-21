@@ -116,19 +116,32 @@ function level9() {
 	map.customTop = () => {};
 }
 function level10() {
-	camera.zoom = 0.8;
-	map.sequenceLimit = 2;
+	camera.zoom = 1;
+	map.sequenceLimit = 3;
 	map.sequenceTimeLim = 0;
-	map.mapRect(-400, 100, 500, 50);
-	map.mapRect(-400, -500, 500, 50);
-	map.mapRect(-400, -500, 50, 650);
-	map.deathRect(75, -500, 25, 650);
-	map.mapRect(-200, -300, 50, 250);
-	map.mapRect(-200, -100, 300, 50);
-	map.mapRect(-200, -300, 300, 50);
-	map.bodyRect(-250, -450, 50, 550);
-	map.exit = new Rect(-72.5, -340, 20, 40);
-	map.custom = () => {};
-	map.customBottom = () => {};
+	map.mapRect(-500, 100, 1000, 50);
+	map.mapRect(-500, -100, 25, 250);
+	map.mapRect(-500, -100, 225, 25);
+	map.mapRect(-300, -100, 25, 150);
+	map.deathRect(475, -100, 25, 200);
+	map.mapRect(275, -100, 145, 25);
+	map.mapRect(275, -100, 25, 150);
+	let button = map.button(337.5, 90, 100, 10);
+	let button2 = map.button(310, -110, 100, 10);
+	let door = map.door(-300, 50, 12.5, 50, 10);
+	let door2 = map.door(-287.5, 50, 12.5, 50, 10);
+	map.exit = new Rect(-397.5, 60, 20, 40);
+	map.custom = () => {
+		button.query();
+		button2.query();
+		door.isOpen = button.isPressed;
+		door.query();
+		door2.isOpen = button2.isPressed;
+		door2.query();
+	};
+	map.customBottom = () => {
+		button.draw();
+		button2.draw();
+	};
 	map.customTop = () => {};
 }

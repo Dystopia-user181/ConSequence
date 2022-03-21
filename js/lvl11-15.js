@@ -2,6 +2,23 @@ function level11() {
 	camera.zoom = 0.8;
 	map.sequenceLimit = 2;
 	map.sequenceTimeLim = 0;
+	map.mapRect(-400, 100, 500, 50);
+	map.mapRect(-400, -500, 500, 50);
+	map.mapRect(-400, -500, 50, 650);
+	map.deathRect(75, -500, 25, 650);
+	map.mapRect(-200, -300, 50, 250);
+	map.mapRect(-200, -100, 300, 50);
+	map.mapRect(-200, -300, 300, 50);
+	map.bodyRect(-250, -450, 50, 550);
+	map.exit = new Rect(-72.5, -340, 20, 40);
+	map.custom = () => {};
+	map.customBottom = () => {};
+	map.customTop = () => {};
+}
+function level12() {
+	camera.zoom = 0.8;
+	map.sequenceLimit = 2;
+	map.sequenceTimeLim = 0;
 	map.mapRect(-300, 100, 1100, 50);
 	map.bodyRect(100, -100, 50, 80);
 	map.mapRect(700, -100, 300, 250);
@@ -27,7 +44,7 @@ function level11() {
 	};
 	map.customTop = ()=>{};
 }
-function level12() {
+function level13() {
 	camera.zoom = 1
 	map.sequenceLimit = 2;
 	map.sequenceTimeLim = 0;
@@ -58,7 +75,7 @@ function level12() {
 	};
 	map.customTop = ()=>{};
 }
-function level13() {
+function level14() {
 	camera.zoom = 0.7
 	map.sequenceLimit = 3;
 	map.sequenceTimeLim = 0;
@@ -95,7 +112,7 @@ function level13() {
 	};
 	map.customTop = ()=>{};
 }
-function level14() {
+function level15() {
 	camera.zoom = 0.7;
 	map.sequenceLimit = 3;
 	map.sequenceTimeLim = 0;
@@ -151,20 +168,4 @@ function level14() {
 	map.customTop = ()=>{
 		button2.draw();
 	};
-}
-function level15() {
-	camera.zoom = 1;
-	map.sequenceLimit = 2;
-	map.sequenceTimeLim = 0;
-	map.mapRect(-100, 100, 700, 50);
-	map.mapRect(500, -200, 200, 350);
-	let jumpBoost = map.boost(400, 40, "jump");
-	map.exit = new Rect(590, -240, 20, 40);
-	map.custom = () => {
-		jumpBoost.query();
-	};
-	map.customBottom = () => {
-		jumpBoost.draw();
-	};
-	map.customTop = () => {};
 }

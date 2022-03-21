@@ -13,7 +13,9 @@ let map = {
 		map.bodies.push(new Rect(p.pos.x, p.pos.y, p.width, p.height, {type: "body"}));
 	},
 	bodyRect(x, y, w, h) {
-		map.blocks.push(new Rect(x, y, w, h, {type: "block", prevPos: {x, y}, velY: 0, logPos: false, sequence: {s: [], w, h}}));
+		map.blocks.push(new Rect(x, y, w, h, {
+			type: "block", prevPos: {x, y}, velY: 0, logPos: false, sequence: {s: [], w, h}
+		}));
 	},
 	deathRect(x, y, w, h) {
 		map.death.push(new Rect(x, y, w, h, {type: "death"}));
@@ -72,7 +74,7 @@ let map = {
 	level11, level12, level13, level14, level15,
 	level16, level17, level18, level19, level20,
 	level21, level22, level23, level24, level25,
-	level26, level27, level28,
+	level26, level27, level28, level29, level30,
 	level: 1,
 	custom() {},
 	customBottom() {},

@@ -87,7 +87,7 @@ function loop() {
 		}
 		map.custom();
 		if (!player.deathTimer) {
-			map.sequenceTCounter += 1/(1+p.isInsideGrp(map.simBSequence, 7));
+			map.sequenceTCounter += 1/(1 + p.isInsideGrp(map.simBSequence, 7));
 			if (map.sequenceTCounter >= 1) {
 				map.sequenceTime++;
 				map.sequenceTCounter = 0;

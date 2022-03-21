@@ -74,4 +74,12 @@ class Rect {
 		}
 		return mapEls.length > 0;
 	}
+
+	get midX() {
+		return this.pos.x + this.width/2;
+	}
+
+	get midY() {
+		return this.pos.y + this.height/2;
+	}
 }

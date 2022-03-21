@@ -23,7 +23,7 @@ player.move = function() {
 	for (let i = 0; i < Math.floor(player.velY*ySign/10); i++) {
 		p.pos.y += 10*ySign/(1 + p.isInsideGrp(map.simBSequence, 7));
 		if (p.fixPos(player.velY, "y")) {
-			canJump = player.velY >= 0 || canJump;
+			canJump = gravity()*player.velY >= 0 || canJump;
 			player.velY = 0;
 			isCollMap = true;
 		}
@@ -31,7 +31,7 @@ player.move = function() {
 	let left = player.velY%10;
 	p.pos.y += Math.round(left)/(1+p.isInsideGrp(map.simBSequence, 7));
 	if (p.fixPos(player.velY, "y")) {
-		canJump = player.velY >= 0 || canJump;
+		canJump = gravity()*player.velY >= 0 || canJump;
 		player.velY = 0;
 		isCollMap = true;
 	}
@@ -69,7 +69,7 @@ player.move = function() {
 
 		c.style.filter = "invert(1)";
 	}
-	if (p.pos.y > 4000) {
+	if (Math.abs(p.pos.y) > 5000) {
 		player.deathTimer = 10;
 	}
 	if (player.tmpDead) {
@@ -77,16 +77,17 @@ player.move = function() {
 		p.fixPos(player.tmpDead == 'x' ? player.velX : player.velY, player.tmpDead, map.death);
 		map.deathBody();
 		camera.pos.x = p.pos.x + 15;
-		camera.pos.y = Math.min(p.pos.y + 15, 3500);
+		camera.pos.y = Math.max(Math.min(p.pos.y + 15, 3500), -3500)
 		player.tmpDead = false;
 	}
 
-	if (player.sequence.length < 10000 && map.sequenceLimit > 0) player.sequence.push({...p.pos});
-
 	logBlocksPos();
 
+	if (map.sequenceTCounter == 0 && player.sequence.length < 1e5 && map.sequenceLimit > 0)
+		player.sequence.push({...p.pos});
+
 	camera.pos.x = player.rect.pos.x + 15;
-	camera.pos.y = Math.min(player.rect.pos.y + 15, 3500);
+	camera.pos.y = Math.max(Math.min(player.rect.pos.y + 15, 3500), -3500);
 }
 
 function gravity() {

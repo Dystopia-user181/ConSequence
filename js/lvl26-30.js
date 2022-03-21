@@ -1,4 +1,37 @@
 function level26() {
+	map.sequenceLimit = 2;
+	map.sequenceTimeLim = 0;
+	camera.zoom = 1;
+	player.modifiers.gravity = 1;
+	map.mapRect(-101, 100, 201, 25);
+	map.mapRect(-1102, -20, 1004, 145);
+	map.mapRect(-1100, -60, 1000, 10);
+	map.mapRect(-1100, -1000, 5, 945);
+	map.mapRect(-150, -200, 50, 5);
+	map.mapRect(-1000, -230, 50, 5);
+	map.mapRect(-1000, -400, 50, 5);
+	map.exit = new Rect(-985, -440, 20, 40);
+
+	let jumpBoost = map.boost(-1300, -60, "jump");
+	let gravityBoost = map.boost(-145, -250, "gravity");
+	map.custom = () => {
+		jumpBoost.query();
+		gravityBoost.query();
+	};
+	map.customBottom = () => {
+		jumpBoost.draw();
+		gravityBoost.draw();
+	};
+	map.customTop = () => {
+		ctx.fillStyle = '#fff';
+		ctx.shadowBlur = 15;
+		ctx.shadowColor = '#fff';
+		ctx.font = '24px monospace';
+		ctx.textAlign = 'left';
+		ctx.fillText("Perhaps the physics engine can be abused.", cam.getX(-100), cam.getY(200));
+	};
+}
+function level27() {
 	map.sequenceLimit = 3;
 	map.sequenceTimeLim = 0;
 	camera.zoom = 1;
@@ -37,7 +70,7 @@ function level26() {
 		gravityBoost.draw();
 	};
 }
-function level27() {
+function level28() {
 	map.sequenceLimit = 5;
 	map.sequenceTimeLim = 0;
 	camera.zoom = 1;
@@ -57,7 +90,40 @@ function level27() {
 		ctx.fillText("Scale the wall.", cam.getX(0), cam.getY(-200));
 	};
 }
-function level28() {
+function level29() {
+	map.sequenceLimit = 0;
+	map.sequenceTimeLim = 0;
+	player.modifiers.gravity = -1;
+	camera.zoom = 1;
+	map.mapRect(-100, 100, 225, 25);
+	map.mapRect(100, 100, 25, 2025);
+	map.mapRect(225, -150, 25, 2150);
+	map.mapRect(115, 600, 80, 25);
+	map.mapRect(155, 900, 80, 25);
+	map.mapRect(115, 1200, 80, 25);
+	map.mapRect(155, 1400, 80, 25);
+	map.mapRect(115, 1550, 80, 25);
+	map.mapRect(155, 1700, 80, 25);
+	map.mapRect(115, 1850, 80, 25);
+
+	map.mapRect(100, 2100, 275, 25);
+	map.mapRect(350, 1800, 25, 325);
+	map.mapRect(225, 1975, 90, 25);
+	map.mapRect(225, 1800, 150, 25);
+	let gravityBoost1 = map.boost(155, 400, "gravity");
+	let gravityBoost2 = map.boost(155, 2000, "gravity");
+	map.exit = new Rect(275, 1935, 20, 40);
+	map.custom = () => {
+		gravityBoost1.query();
+		gravityBoost2.query();
+	};
+	map.customBottom = () => {
+		gravityBoost1.draw();
+		gravityBoost2.draw();
+	};
+	map.customTop = () => {};
+}
+function level30() {
 	map.sequenceLimit = 1e15;
 	map.sequenceTimeLim = 0;
 	camera.zoom = 1;

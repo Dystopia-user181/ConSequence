@@ -2,6 +2,38 @@ function level21() {
 	map.sequenceLimit = 3;
 	map.sequenceTimeLim = 0;
 	camera.zoom = 0.7;
+	map.mapRect(-100, 100, 200, 25);
+	map.deathRect(-125, -490, 25, 915);
+	map.mapRect(-100, 400, 601, 25);
+	map.bodyRect(100, -500, 75, 900);
+	map.mapRect(200, -475, 300, 50);
+	map.mapRect(250, -550, 150, 40);
+	map.mapRect(300, -600, 100, 60);
+	map.mapRect(-125, -600, 225, 110);
+	map.bodyRect(0, -625, 50, 25);
+
+	map.mapRect(450, -2000, 50, 1550);
+	let button1 = map.button(-50, 390, 100, 10);
+	let door1 = map.door(400, -900, 50, 425);
+	map.mapRect(375, -950, 80, 50);
+
+	map.mapRect(500, -350, 200, 775);
+	map.bodyRect(300, -1400, 75, 800);
+	map.exit = new Rect(590, -390, 20, 40);
+	map.custom = () => {
+		button1.query();
+		door1.isOpen = button1.isPressed;
+		door1.query();
+	};
+	map.customBottom = () => {
+		button1.draw();
+	};
+	map.customTop = () => {};
+}
+function level22() {
+	map.sequenceLimit = 3;
+	map.sequenceTimeLim = 0;
+	camera.zoom = 0.7;
 
 	map.mapRect(-600, 100, 2000, 25);
 	map.mapRect(-600, 300, 2200, 25);
@@ -90,7 +122,7 @@ function level21() {
 	};
 	map.customTop = () => {};
 }
-function level22() {
+function level23() {
 	map.sequenceLimit = 5;
 	map.sequenceTimeLim = 0;
 	camera.zoom = 1;
@@ -110,7 +142,7 @@ function level22() {
 	map.customBottom = () => {};
 	map.customTop = () => {};
 }
-function level23() {
+function level24() {
 	map.sequenceLimit = 2;
 	map.sequenceTimeLim = 0;
 	camera.zoom = 1;
@@ -137,7 +169,7 @@ function level23() {
 	};
 	map.customTop = () => {};
 }
-function level24() {
+function level25() {
 	map.sequenceLimit = 2;
 	map.sequenceTimeLim = 0;
 	camera.zoom = 0.8;
@@ -176,32 +208,6 @@ function level24() {
 	map.customBottom = () => {
 		button.draw();
 		button2.draw();
-		gravityBoost.draw();
-	};
-	map.customTop = () => {};
-}
-function level25() {
-	map.sequenceLimit = 2;
-	map.sequenceTimeLim = 0;
-	camera.zoom = 1;
-	player.modifiers.gravity = 1;
-	map.mapRect(-101, 100, 201, 25);
-	map.mapRect(-1100, -20, 1000, 145);
-	map.mapRect(-1100, -60, 1000, 5);
-	map.mapRect(-1100, -1000, 5, 945);
-	map.mapRect(-150, -200, 50, 5);
-	map.mapRect(-1000, -230, 50, 5);
-	map.mapRect(-1000, -400, 50, 5);
-	map.exit = new Rect(-985, -440, 20, 40);
-
-	let jumpBoost = map.boost(-1300, -60, "jump");
-	let gravityBoost = map.boost(-145, -250, "gravity");
-	map.custom = () => {
-		jumpBoost.query();
-		gravityBoost.query();
-	};
-	map.customBottom = () => {
-		jumpBoost.draw();
 		gravityBoost.draw();
 	};
 	map.customTop = () => {};

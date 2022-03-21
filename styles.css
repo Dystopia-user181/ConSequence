@@ -58,6 +58,11 @@
 	padding-top: 10px;
 	font-size: 20px;
 }
+#modifiertext {
+	font-size: 30px;
+	min-width: 240px;
+	display: inline-block;
+}
 
 button {
 	font-size: 20px;

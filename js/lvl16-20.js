@@ -2,6 +2,22 @@ function level16() {
 	camera.zoom = 1;
 	map.sequenceLimit = 2;
 	map.sequenceTimeLim = 0;
+	map.mapRect(-100, 100, 700, 50);
+	map.mapRect(500, -200, 200, 350);
+	let jumpBoost = map.boost(400, 40, "jump");
+	map.exit = new Rect(590, -240, 20, 40);
+	map.custom = () => {
+		jumpBoost.query();
+	};
+	map.customBottom = () => {
+		jumpBoost.draw();
+	};
+	map.customTop = () => {};
+}
+function level17() {
+	camera.zoom = 1;
+	map.sequenceLimit = 2;
+	map.sequenceTimeLim = 0;
 	map.mapRect(-200, 100, 1500, 50);
 	map.mapRect(-200, -1000, 50, 1150);
 	map.mapRect(1200, -200, 200, 350);
@@ -17,7 +33,7 @@ function level16() {
 	};
 	map.customTop = () => {};
 }
-function level17() {
+function level18() {
 	camera.zoom = 0.6;
 	map.sequenceLimit = 3;
 	map.sequenceTimeLim = 0;
@@ -73,7 +89,7 @@ function level17() {
 		button2.draw();
 	};
 }
-function level18() {
+function level19() {
 	camera.zoom = 0.8;
 	map.sequenceLimit = 3;
 	map.sequenceTimeLim = 0;
@@ -110,7 +126,7 @@ function level18() {
 	};
 	map.customTop = () => {};
 }
-function level19() {
+function level20() {
 	camera.zoom = 0.8;
 	map.sequenceLimit = 3;
 	map.sequenceTimeLim = 0;
@@ -162,38 +178,6 @@ function level19() {
 		button2.draw();
 		button3.draw();
 		button4.draw();
-	};
-	map.customTop = () => {};
-}
-function level20() {
-	map.sequenceLimit = 3;
-	map.sequenceTimeLim = 0;
-	camera.zoom = 0.7;
-	map.mapRect(-100, 100, 200, 25);
-	map.deathRect(-125, -490, 25, 915);
-	map.mapRect(-100, 400, 601, 25);
-	map.bodyRect(100, -500, 75, 900);
-	map.mapRect(200, -475, 300, 50);
-	map.mapRect(250, -550, 150, 40);
-	map.mapRect(300, -600, 100, 60);
-	map.mapRect(-125, -600, 225, 110);
-	map.bodyRect(0, -625, 50, 25);
-
-	map.mapRect(450, -2000, 50, 1550);
-	let button1 = map.button(-50, 390, 100, 10);
-	let door1 = map.door(400, -900, 50, 425);
-	map.mapRect(375, -950, 80, 50);
-
-	map.mapRect(500, -350, 200, 775);
-	map.bodyRect(300, -1400, 75, 800);
-	map.exit = new Rect(590, -390, 20, 40);
-	map.custom = () => {
-		button1.query();
-		door1.isOpen = button1.isPressed;
-		door1.query();
-	};
-	map.customBottom = () => {
-		button1.draw();
 	};
 	map.customTop = () => {};
 }

@@ -3,13 +3,7 @@ let ctx = c.getContext("2d");
 
 let camera = {
 	pos: {x: 0, y: 0},
-	get zoom() {
-		return cam.realZoom*window.innerWidth/1536;
-	},
-	set zoom(x) {
-		cam.realZoom = x;
-	},
-	realZoom: 1,
+	zoom: 1,
 	getX(x) {
 		return (x - camera.pos.x)*camera.zoom + c.width/2
 	},
@@ -37,8 +31,15 @@ function drawRect(rect, y, width, height) {
 	if (typeof rect == "number") rect = new Rect(rect, y, width, height);
 	ctx.fillRect(cam.getX(rect.pos.x), cam.getY(rect.pos.y), cam.pZ(rect.width), cam.pZ(rect.height))
 }
-function strokeRect(rect, y, width, height) {
-	if (y) rect = new Rect(rect, y, width, height);
+function strokeRect(rect, y = 0, width, height, sub = 0) {
+	if (width) rect = new Rect(rect + sub, y + sub, width - sub*2, height - sub*2);
+	else {
+		rect = new Rect(rect.pos.x, rect.pos.y, rect.width, rect.height);
+		rect.pos.x += y;
+		rect.pos.y += y;
+		rect.width -= y*2;
+		rect.height -= y*2;
+	}
 	ctx.strokeRect(cam.getX(rect.pos.x), cam.getY(rect.pos.y), cam.pZ(rect.width), cam.pZ(rect.height))
 }
 
@@ -153,8 +154,17 @@ function drawAll() {
 	ctx.shadowColor = '#ff0';
 	ctx.shadowBlur = 15;
 	ctx.fillStyle = '#ff0';
+	ctx.strokeStyle = "#880";
+	ctx.lineWidth = 2;
 	for (let i in map.blocks) {
 		drawRect(map.blocks[i]);
+		let x = cam.getX(map.blocks[i].midX), y = cam.getY(map.blocks[i].midY);
+		ctx.beginPath();
+		ctx.moveTo(x - 6, y);
+		ctx.lineTo(x + 6, y);
+		ctx.moveTo(x, y - 6);
+		ctx.lineTo(x, y + 6);
+		ctx.stroke();
 	}
 
 	ctx.shadowBlur = 0;
@@ -212,7 +222,7 @@ function drawAll() {
 
 		ctx.fillStyle = "#0fc6";
 		ctx.shadowBlur = 0;
-		if (map.simPSequence.length > 0) drawRect(new Rect(-15, -15, 30, 30));
+		if (map.simPSequence.length > 0) drawRect(new Rect(-15, -15, 30, 30), 10);
 
 		for (let i in map.simPSequence) {
 			let sP = map.simPSequence[i];

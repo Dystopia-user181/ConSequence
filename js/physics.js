@@ -92,7 +92,7 @@ player.move = function() {
 
 function gravity() {
 	let base = 0.6;
-	base *= player.modifiers.gravity*0.5 + 1;
+	base *= player.modifiers.gravity * 0.5 + 1;
 	return base;
 }
 function jumpheight() {

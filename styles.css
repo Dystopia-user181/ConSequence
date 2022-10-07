@@ -113,3 +113,12 @@ button {
 	text-shadow: 0 0 5px #8ff;
 	outline: none;
 }
+
+button {
+	cursor: pointer;
+}
+
+button:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}

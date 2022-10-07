@@ -205,7 +205,9 @@ function level5() {
 	map.mapRect(1100, -65, 200, 25);
 	map.deathRect(1000, -265, 25, 200);
 	map.mapRect(500, -265, 500, 25);
-	map.deathRect(-200, -415, 600, 50);
+
+	map.deathRect(200, -415, 200, 50);
+	map.mapRect(-200, -415, 401, 50);
 	map.exit = new Rect(-110, -455, 20, 40);
 	map.custom = ()=>{};
 	map.customBottom = ()=>{

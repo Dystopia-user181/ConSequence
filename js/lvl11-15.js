@@ -19,15 +19,15 @@ function level12() {
 	camera.zoom = 0.8;
 	map.sequenceLimit = 2;
 	map.sequenceTimeLim = 0;
-	map.mapRect(-300, 100, 1100, 50);
+	map.mapRect(-300, 100, 900, 50);
 	map.bodyRect(100, -100, 50, 80);
-	map.mapRect(700, -100, 300, 250);
-	map.mapRect(700, -300, 25, 100);
-	map.mapRect(700, -300, 300, 25);
-	map.mapRect(975, -300, 25, 300);
+	map.mapRect(500, -100, 300, 250);
+	map.mapRect(500, -300, 25, 100);
+	map.mapRect(500, -300, 300, 25);
+	map.mapRect(775, -300, 25, 300);
 	let button = map.button(-250, 90, 100, 10);
-	let door = map.door(705, -200, 15, 100, 10);
-	map.exit = new Rect(840, -140, 20, 40);
+	let door = map.door(505, -200, 15, 100, 10);
+	map.exit = new Rect(640, -140, 20, 40);
 	map.custom = () => {
 		button.query();
 		door.isOpen = button.isPressed;
@@ -39,7 +39,7 @@ function level12() {
 		ctx.shadowColor = '#fff';
 		ctx.font = '30px monospace';
 		ctx.textAlign = 'left';
-		ctx.fillText("Planning is important.", cam.getX(0), cam.getY(-100));
+		ctx.fillText("Planning is important.", cam.getX(-150), cam.getY(-100));
 		button.draw();
 	};
 	map.customTop = ()=>{};

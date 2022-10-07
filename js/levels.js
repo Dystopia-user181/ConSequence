@@ -104,28 +104,23 @@ let levelSelect = {
 			let el = document.querySelector('#lvl' + i);
 			el.innerText = i + levelSelect.page*10;
 
-			if (i + levelSelect.page*10 > levelSelect.maxLvl) el.style.opacity = 0.5;
-			else el.style.opacity = 1;
-
 			if (!map["level" + (i + levelSelect.page*10)]) el.style.visibility = "hidden";
 			else el.style.visibility = "visible";
+
+			el.disabled = i + levelSelect.page*10 > levelSelect.maxLvl;
 		}
 	},
 	prev() {
 		levelSelect.page = Math.max(0, levelSelect.page - 1);
-		if (levelSelect.page == 0) document.querySelector('#lvlprev').style.opacity = 0.5;
-		else document.querySelector('#lvlprev').style.opacity = 1;
-
-		document.querySelector('#lvlnext').style.opacity = 1;
+		document.querySelector('#lvlprev').disabled = levelSelect.page === 0;
+		document.querySelector('#lvlnext').disabled = false;
 
 		levelSelect.setBtnStyles();
 	},
 	next() {
 		levelSelect.page = Math.min(levelSelect.maxPage, levelSelect.page + 1);
-		if (levelSelect.page == levelSelect.maxPage) document.querySelector('#lvlnext').style.opacity = 0.5;
-		else document.querySelector('#lvlnext').style.opacity = 1;
-
-		document.querySelector('#lvlprev').style.opacity = 1;
+		document.querySelector('#lvlnext').disabled = levelSelect.page === levelSelect.maxPage;
+		document.querySelector('#lvlprev').disabled = false;
 
 		levelSelect.setBtnStyles();
 	},
@@ -140,13 +135,9 @@ let levelSelect = {
 
 if (typeof localStorage.getItem("frostjam-consequencesave-scarlet") == "string") {
 	levelSelect.maxLvl = Number(atob(localStorage.getItem("frostjam-consequencesave-scarlet")));
-	levelSelect.page = Math.floor(levelSelect.maxLvl/10 - 0.1);
-	if (levelSelect.page == 0) document.querySelector('#lvlprev').style.opacity = 0.5;
-	else document.querySelector('#lvlprev').style.opacity = 1;
-
-
-	if (levelSelect.page == levelSelect.maxPage) document.querySelector('#lvlnext').style.opacity = 0.5;
-	else document.querySelector('#lvlnext').style.opacity = 1;
+	levelSelect.page = Math.floor(levelSelect.maxLvl / 10 - 0.1);
+	document.querySelector('#lvlprev').disabled = levelSelect.page === 0;
+	document.querySelector('#lvlnext').disabled = levelSelect.page === levelSelect.maxPage;
 }
 
 class Door {

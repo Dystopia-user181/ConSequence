@@ -37,9 +37,10 @@ function level12() {
 		ctx.fillStyle = '#fff';
 		ctx.shadowBlur = 15;
 		ctx.shadowColor = '#fff';
-		ctx.font = '30px monospace';
-		ctx.textAlign = 'left';
-		ctx.fillText("Planning is important.", cam.getX(-150), cam.getY(-100));
+		ctx.font = '25px monospace';
+		ctx.textAlign = 'center';
+		ctx.fillText("Perhaps the blocks don't always", cam.getX(0), cam.getY(-100));
+		ctx.fillText("have to stop being solid.", cam.getX(0), cam.getY(-50));
 		button.draw();
 	};
 	map.customTop = ()=>{};

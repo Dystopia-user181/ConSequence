@@ -152,7 +152,7 @@ function drawAll() {
 	}
 
 	ctx.shadowColor = '#ff0';
-	ctx.strokeStyle = "#880";
+	ctx.strokeStyle = '#880';
 	ctx.lineWidth = 2;
 	for (let i in map.blocks) {
 		const b = map.blocks[i];
@@ -160,6 +160,11 @@ function drawAll() {
 		if (b.meta.logPos) ctx.fillStyle = '#ffff55' + Math.floor(180 + Math.sin(Date.now() / 200) * 75).toString(16);
 		else ctx.fillStyle = '#cc0';
 		drawRect(map.blocks[i]);
+		if (b.meta.logPos) {
+			ctx.strokeStyle = '#ff0';
+			strokeRect(map.blocks[i]);
+			ctx.strokeStyle = '#880';
+		}
 		let x = cam.getX(map.blocks[i].midX), y = cam.getY(map.blocks[i].midY);
 		ctx.shadowBlur = 0;
 		ctx.beginPath();

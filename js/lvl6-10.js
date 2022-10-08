@@ -58,7 +58,7 @@ function level8() {
 	map.mapRect(-200, 100, 300, 30);
 	map.mapRect(350, 100, 450, 30);
 	map.deathRect(-200, 130, 1000, 30);
-	map.bodyRect(-50, 85, 100, 15);
+	map.bodyRect(-30, 85, 100, 15);
 
 	map.mapRect(775, -400, 25, 525);
 	map.mapRect(575, -200, 225, 280);
@@ -110,7 +110,7 @@ function level9() {
 		ctx.shadowColor = '#fff';
 		ctx.font = '30px monospace';
 		ctx.textAlign = 'center';
-		ctx.fillText("Dying is more important than you think.", cam.getX(0), cam.getY(-200));
+		ctx.fillText("Dying is more important than you might think.", cam.getX(0), cam.getY(-200));
 		button.draw();
 	};
 	map.customTop = () => {};

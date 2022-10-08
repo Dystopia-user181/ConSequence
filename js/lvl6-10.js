@@ -56,7 +56,7 @@ function level8() {
 	map.sequenceLimit = 0;
 	map.sequenceTimeLim = 0;
 	map.mapRect(-200, 100, 300, 30);
-	map.mapRect(500, 100, 300, 30);
+	map.mapRect(350, 100, 450, 30);
 	map.deathRect(-200, 130, 1000, 30);
 	map.bodyRect(-50, 85, 100, 15);
 

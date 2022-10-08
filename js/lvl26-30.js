@@ -4,7 +4,7 @@ function level26() {
 	camera.zoom = 1;
 	player.modifiers.gravity = 1;
 	map.mapRect(-101, 100, 201, 25);
-	map.mapRect(-1102, -20, 1004, 145);
+	map.mapRect(-1104, -20, 1006, 145);
 	map.mapRect(-1100, -60, 1000, 10);
 	map.mapRect(-1100, -1000, 5, 945);
 	map.mapRect(-150, -200, 50, 5);
